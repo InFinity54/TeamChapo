@@ -1,0 +1,22 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path("homepage") }}">
+        <div class="sidebar-brand-icon">
+            <img src="{{ asset("img/teamchapo_logo.png") }}" alt="" width="39" height="39" />
+        </div>
+        <div class="sidebar-brand-text mx-3">Team<strong>Chapo</strong></div>
+    </a>
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item {% if app.request.pathinfo == '/' %}active{% endif %}">
+        <a class="nav-link" href="{{ path("homepage") }}">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span></a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
