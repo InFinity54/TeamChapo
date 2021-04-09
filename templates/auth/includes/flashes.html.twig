@@ -1,0 +1,15 @@
+{% for message in app.flashes('info') %}
+    <script>toastr.info({{ message }});</script>
+{% endfor %}
+
+{% for message in app.flashes('success') %}
+    <script>toastr.success({{ message }});</script>
+{% endfor %}
+
+{% for message in app.flashes('warning') %}
+    <script>toastr.warning({{ message }});</script>
+{% endfor %}
+
+{% for message in app.flashes('danger') %}
+    <script>toastr.error({{ message }});</script>
+{% endfor %}

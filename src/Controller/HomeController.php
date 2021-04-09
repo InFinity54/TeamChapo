@@ -6,12 +6,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-
     /**
      * @Route("/", name="homepage")
      */
     public function homepage()
     {
-        return $this->render("pages/index.html.twig");
+        return $this->render("site/pages/index.html.twig");
     }
 }
