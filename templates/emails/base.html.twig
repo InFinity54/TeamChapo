@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="format-detection" content="telephone=no" />
+        <title>Team Chapo</title>
+        {% include "emails/includes/css.html.twig" %}
+    </head>
+    <body style="background-color: #ecf0f1;">
+        <div style="margin-left: auto; margin-right: auto; background-color:#ecf0f1;">
+            {% include "emails/includes/header.html.twig" %}
+
+            <table id="email-penrose-conteneur" style="width: 660px; margin-left: auto; margin-right: auto; border: 1px solid #e2e8ea; background-color:#ffffff; font-family:'Helvetica Neue', helvetica, arial, sans-serif;">
+                {% include "emails/includes/subject.html.twig" %}
+
+                <tr>
+                    <td style="padding-left: 20px; padding-right: 20px; padding-bottom: 10px;">
+                        {% block body %}{% endblock %}
+                    </td>
+                </tr>
+            </table>
+
+            {% include "emails/includes/footer.html.twig" %}
+        </div>
+    </body>
+</html>

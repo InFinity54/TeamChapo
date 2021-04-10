@@ -24,7 +24,7 @@ class User implements UserInterface
     private $nickname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
@@ -57,6 +57,16 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $lastUpdateAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $tokenExpDate;
 
     public function getId(): ?int
     {
@@ -155,6 +165,30 @@ class User implements UserInterface
     public function setLastUpdateAt(\DateTimeInterface $lastUpdateAt): self
     {
         $this->lastUpdateAt = $lastUpdateAt;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getTokenExpDate(): ?\DateTimeInterface
+    {
+        return $this->tokenExpDate;
+    }
+
+    public function setTokenExpDate(?\DateTimeInterface $tokenExpDate): self
+    {
+        $this->tokenExpDate = $tokenExpDate;
 
         return $this;
     }

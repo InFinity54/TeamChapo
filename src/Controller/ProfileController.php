@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Services\AvatarUpload;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -70,6 +71,7 @@ class ProfileController extends AbstractController
                 if ($request->request->get("newpassword") === $request->request->get("confirmnewpassword")) {
                     if ($encoder->isPasswordValid($user, $request->request->get("oldpassword"))) {
                         $user->setPassword($encoder->encodePassword($user, $request->request->get("newpassword")));
+                        $user->setLastUpdateAt(new DateTime("now"));
 
                         $manager->persist($user);
                         $manager->flush();
