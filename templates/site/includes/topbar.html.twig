@@ -17,6 +17,10 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 {% if app.user is not null %}
+                    <a class="dropdown-item {% if app.request.pathinfo == '/profile' %}active{% endif %}" href="{{ path("profile") }}">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profil
+                    </a>
                     <a class="dropdown-item" href="{{ path("logout") }}">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Déconnexion
