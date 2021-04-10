@@ -1,3 +1,18 @@
+$("#profile-form").validate({
+    rules: {
+        email: {
+            required: true,
+            email: true
+        },
+        picture: {
+            required: false
+        }
+    },
+    ignore: "#nickname",
+    errorClass: "is-invalid",
+    validClass: "is-valid"
+});
+
 $('#picture').dropify({
     messages: {
         'default': 'Glisse un fichier dans la zone ou clique pour sélectionner une image.',
