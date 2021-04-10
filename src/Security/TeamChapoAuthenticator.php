@@ -78,7 +78,11 @@ class TeamChapoAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function checkCredentials($credentials, UserInterface $user): bool
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        if ($this->passwordEncoder->isPasswordValid($user, $credentials['password'])) {
+            return true;
+        }
+
+        throw new CustomUserMessageAuthenticationException('Mot de passe incorrect.');
     }
 
     /**
