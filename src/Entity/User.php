@@ -44,6 +44,11 @@ class User implements UserInterface
     private $roles = "";
 
     /**
+     * @ORM\ManyToOne(targetEntity=Lane::class, inversedBy="user")
+     */
+    private $lane;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isActivated;
@@ -129,6 +134,18 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = implode("|", $roles);
+
+        return $this;
+    }
+
+    public function getLane(): ?Lane
+    {
+        return $this->lane;
+    }
+
+    public function setLane(?Lane $lane): self
+    {
+        $this->lane = $lane;
 
         return $this;
     }

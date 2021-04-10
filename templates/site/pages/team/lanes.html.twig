@@ -1,0 +1,72 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Équipe > Postes{% endblock %}
+
+{% block css %}{% endblock %}
+{% block js %}{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Postes de l'équipe</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 {% if fill.user|length > 0 %}col-md-6 col-lg-8{% endif %}">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Visualisation des postes</h6>
+                </div>
+                <div class="card-body">
+                    {% if app.user is not null %}
+                        <div class="alert alert-info">
+                            Pour modifier ton poste dans l'équipe, accède à <a href="{{ path("profile") }}">ton profil</a>.
+                        </div>
+                    {% endif %}
+                    <table class="table table-striped w-100">
+                        <thead class="text-center">
+                            <th>Poste</th>
+                            <th>Joueur</th>
+                        </thead>
+                        {% for lane in lanes %}
+                            <tr class="text-center">
+                                <td class="align-middle">
+                                    <img src="{{ asset("riot/lol/lanes/" ~ lane.image) }}" alt="" title="{{ lane.name }}" width="50" height="auto" />
+                                    <br />
+                                    {{ lane.name }}
+                                </td>
+                                <td class="align-middle">
+                                    {% if lane.user|length > 0 %}
+                                        {% for player in lane.user %}
+                                            {{ player.nickname }}
+                                        {% endfor %}
+                                    {% else %}
+                                        Aucun joueur à ce poste
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tfoot class="text-center">
+                            <th>Poste</th>
+                            <th>Joueur</th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {% if fill.user|length > 0 %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Joueurs sans postes</h6>
+                </div>
+                <div class="card-body text-center">
+                    {% for player in fill.user %}
+                        {{ player.nickname }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

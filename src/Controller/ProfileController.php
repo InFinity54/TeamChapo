@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Lane;
 use App\Entity\User;
 use App\Services\AvatarUpload;
 use DateTime;
@@ -23,13 +24,16 @@ class ProfileController extends AbstractController
 
         $manager = $this->getDoctrine()->getManager();
         $user = $manager->getRepository(User::class)->findOneBy(["nickname" => $this->getUser()->getUsername()]);
+        $lanes = $manager->getRepository(Lane::class)->findAll();
 
         if ($user) {
             if ($request->request->count() > 0) {
                 $user->setEmail($request->request->get("email"));
+                $user->setLane($manager->getRepository(Lane::class)->find($request->request->get("lane")));
 
                 if ($request->files->get("picture")) {
                     $uploadResult = $avatarUpload->upload($request->files->get("picture"), $user);
+
                     if ($uploadResult !== null) {
                         $user->setPicture($uploadResult);
                         $this->addFlash("success", "La photo de profil a été enregistrée.");
@@ -45,7 +49,8 @@ class ProfileController extends AbstractController
             }
 
             return $this->render("site/pages/profile.html.twig", [
-                "user" => $user
+                "user" => $user,
+                "lanes" => $lanes
             ]);
         }
 

@@ -6,6 +6,9 @@ $("#profile-form").validate({
         },
         picture: {
             required: false
+        },
+        lane: {
+            required: true
         }
     },
     ignore: "#nickname",

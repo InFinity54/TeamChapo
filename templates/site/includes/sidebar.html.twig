@@ -18,6 +18,19 @@
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
+        Équipe
+    </div>
+
+    <li class="nav-item {% if app.request.get('_route') == 'team_lanes' %}active{% endif %}">
+        <a class="nav-link" href="{{ path("team_lanes") }}">
+            <i class="fas fa-gamepad"></i>
+            <span>Postes des joueurs</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
         League of Legends
     </div>
 
