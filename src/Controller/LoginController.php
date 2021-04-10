@@ -15,7 +15,7 @@ class LoginController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            $this->addFlash("success", "Vous êtes déjà connecté(e), ".$this->getUser()->getUsername()." !");
+            $this->addFlash("success", "Tu es déjà connecté(e), ".$this->getUser()->getUsername()." !");
             return $this->redirectToRoute('homepage');
         }
 

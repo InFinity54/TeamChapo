@@ -15,7 +15,7 @@ class ProfileController extends AbstractController
     public function profile(Request $request, AvatarUpload $avatarUpload)
     {
         if (!$this->getUser()) {
-            $this->addFlash("danger", "Vous devez vous connecter pour accéder à cette page.");
+            $this->addFlash("danger", "Tu dois être connecté(e) pour accéder à cette page.");
             return $this->redirectToRoute("login");
         }
 
