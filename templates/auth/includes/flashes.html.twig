@@ -1,15 +1,25 @@
-{% for message in app.flashes('info') %}
-    <script>toastr.info({{ message }});</script>
-{% endfor %}
+<script>
+    toastr.options.escapeHtml = false;
+    toastr.options.preventDuplicates = true;
+    toastr.options.progressBar = true;
+    toastr.options.showDuration = 300;
+    toastr.options.hideDuration = 300;
+    toastr.options.timeOut = 5000;
+    toastr.options.extendedTimeOut = 3000;
 
-{% for message in app.flashes('success') %}
-    <script>toastr.success({{ message }});</script>
-{% endfor %}
+    {% for message in app.flashes('success') %}
+    toastr.success("{{ message }}");
+    {% endfor %}
 
-{% for message in app.flashes('warning') %}
-    <script>toastr.warning({{ message }});</script>
-{% endfor %}
+    {% for message in app.flashes('danger') %}
+    toastr.error("{{ message }}");
+    {% endfor %}
 
-{% for message in app.flashes('danger') %}
-    <script>toastr.error({{ message }});</script>
-{% endfor %}
+    {% for message in app.flashes('warning') %}
+    toastr.warning("{{ message }}");
+    {% endfor %}
+
+    {% for message in app.flashes('info') %}
+    toastr.info("{{ message }}");
+    {% endfor %}
+</script>
