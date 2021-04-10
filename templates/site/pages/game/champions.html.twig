@@ -1,0 +1,37 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}League of Legends > Champions{% endblock %}
+
+{% block css %}{% endblock %}
+{% block js %}{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Liste des champions de League of Legends</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Champions</h6>
+                </div>
+                <div class="card-body">
+                    {% if champions|length > 0 %}
+                        <div class="row">
+                            {% for champion in champions %}
+                                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 text-center">
+                                    <img src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" width="50%" height="auto" />
+                                    <br />
+                                    {{ champion.name }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        Aucun champion n'a été trouvé dans la base de données.
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

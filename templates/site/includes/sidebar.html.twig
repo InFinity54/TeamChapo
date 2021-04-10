@@ -18,22 +18,30 @@
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
-        Équipe
+        League of Legends
     </div>
 
-    <li class="nav-item {% if app.request.get('_route') == 'team_lanes' %}active{% endif %}">
-        <a class="nav-link" href="{{ path("team_lanes") }}">
-            <i class="fas fa-gamepad"></i>
-            <span>Postes</span>
+    <li class="nav-item {% if app.request.get('_route') == 'game_champions' %}active{% endif %}">
+        <a class="nav-link" href="{{ path("game_champions") }}">
+            <i class="fas fa-child"></i>
+            <span>Liste des champions</span>
         </a>
     </li>
 
-    <li class="nav-item {% if app.request.get('_route') == 'team_pool' %}active{% endif %}">
-        <a class="nav-link" href="{{ path("team_pool") }}">
-            <i class="fas fa-hand-holding-heart"></i>
-            <span>Pool de champions</span>
+    {% if "ROLE_ADMIN" in app.user.roles %}
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">
+        Administration
+    </div>
+
+    <li class="nav-item {% if app.request.get('_route') == 'admin_champions_refresh' %}active{% endif %}">
+        <a class="nav-link" href="{{ path("admin_champions_refresh") }}">
+            <i class="fas fa-sync-alt"></i>
+            <span>Actualiser la liste des champions</span>
         </a>
     </li>
+    {% endif %}
 
     <hr class="sidebar-divider d-none d-md-block">
 
