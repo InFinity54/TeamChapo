@@ -7,12 +7,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="Le site de la Team Chapo, joueurs de League of Legends !" />
         <meta name="author" content="InFinity_54" />
-        <link rel="stylesheet" type="text/css" href="{{ asset("vendor/fontawesome-free/css/all.min.css") }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset("css/fonts.css") }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset("css/template.min.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/fontawesome-free/css/all.min.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/fonts.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/template.min.css") }}" />
         {% block css %}{% endblock %}
-        <link rel="stylesheet" type="text/css" href="{{ asset("vendor/toastr/toastr.min.css") }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset("css/toasts.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/toastr/toastr.min.css") }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/toasts.css") }}" />
     </head>
     <body id="page-top">
         <div id="wrapper">
@@ -35,11 +35,11 @@
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <script src="{{ asset("vendor/jquery/jquery.min.js") }}"></script>
-        <script src="{{ asset("vendor/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
-        <script src="{{ asset("vendor/jquery-easing/jquery.easing.min.js") }}"></script>
-        <script src="{{ asset("vendor/toastr/toastr.min.js") }}"></script>
-        <script src="{{ asset("js/template.min.js") }}"></script>
+        <script src="{{ asset("assets/vendor/jquery/jquery.min.js") }}"></script>
+        <script src="{{ asset("assets/vendor/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
+        <script src="{{ asset("assets/vendor/jquery-easing/jquery.easing.min.js") }}"></script>
+        <script src="{{ asset("assets/vendor/toastr/toastr.min.js") }}"></script>
+        <script src="{{ asset("assets/js/template.min.js") }}"></script>
         {% block js %}{% endblock %}
         {% include "site/includes/flashes.html.twig" %}
     </body>

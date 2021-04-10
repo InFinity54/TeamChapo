@@ -3,21 +3,23 @@
 {% block title %}Profil{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ asset("vendor/dropify/css/dropify.min.css") }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset("css/forms.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/dropify/css/dropify.min.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/forms.css") }}" />
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ asset("vendor/jquery-validate/jquery.validate.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("vendor/jquery-validate/localization/messages_fr.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("vendor/dropify/js/dropify.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("js/pages/profile.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/vendor/jquery-validate/jquery.validate.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/vendor/jquery-validate/localization/messages_fr.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/vendor/dropify/js/dropify.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/pages/profile.js") }}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Profil</h1>
-        <a href="{{ path("profile_password") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-key fa-sm"></i> Modifier le mot de passe</a>
+        <a href="{{ path("profile_password") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-key fa-sm"></i> Modifier le mot de passe
+        </a>
     </div>
 
     <div class="row">
@@ -41,7 +43,7 @@
                         <div class="row mt-5">
                             <div class="col-sm-12">
                                 <label for="picture">Photo</label>
-                                <input type="file" name="picture" id="picture" data-default-file="{{ asset("img/avatars/" ~ user.picture) }}" data-min-width="100%" data-max-width="100%" data-height="350" data-allowed-file-extensions="jpg jpeg gif png" />
+                                <input type="file" name="picture" id="picture" data-default-file="{{ asset("assets/img/avatars/" ~ user.picture) }}" data-min-width="100%" data-max-width="100%" data-height="350" data-allowed-file-extensions="jpg jpeg gif png" />
                             </div>
                         </div>
                         <div class="row mt-5">

@@ -9,10 +9,10 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if app.user is not null %}
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ app.user.username }}</span>
-                    <img class="img-profile rounded-circle" src="{{ asset("img/avatars/" ~ app.user.picture) }}" alt="" />
+                    <img class="img-profile rounded-circle" src="{{ asset("assets/img/avatars/" ~ app.user.picture) }}" alt="" />
                 {% else %}
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Déconnecté(e)</span>
-                    <img class="img-profile rounded-circle" src="{{ asset("img/avatars/default.jpg") }}" alt="" />
+                    <img class="img-profile rounded-circle" src="{{ asset("assets/img/avatars/default.jpg") }}" alt="" />
                 {% endif %}
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
