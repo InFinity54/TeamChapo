@@ -26,7 +26,7 @@ class EmailSender extends AbstractController
     public function send(string $to, string $subject, string $template, array $context): void
     {
         $email = (new Swift_Message())
-            ->setFrom($_ENV["TEAMCHAPO_SENDMAIL"])
+            ->setSender($_ENV["TEAMCHAPO_SENDMAIL"])
             ->setTo($to)
             ->setSubject($subject)
         ;
