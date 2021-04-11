@@ -1,13 +1,16 @@
 <?php
 namespace App\Controller\Admin;
 
+use App\Entity\Lane;
 use App\Entity\User;
 use App\Services\EmailSender;
 use App\Traits\TokenGenerator;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminUsersController extends AbstractController
 {
@@ -33,6 +36,59 @@ class AdminUsersController extends AbstractController
 
         return $this->render("site/pages/admin/users/index.html.twig", [
             "users" => $users
+        ]);
+    }
+
+    /**
+     * @Route("/admin/users/new", name="admin_user_new")
+     */
+    public function adminUserNew(Request $request, UserPasswordEncoderInterface $encoder, EmailSender $emailSender)
+    {
+        if (!$this->getUser()) {
+            $this->addFlash("danger", "Tu dois être connecté(e) pour accéder à cette page.");
+            return $this->redirectToRoute("login");
+        }
+
+        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
+            $this->addFlash("danger", "Tu ne disposes pas des droits nécessaires pour accéder à cette page.");
+            return $this->redirectToRoute("homepage");
+        }
+
+        $manager = $this->getDoctrine()->getManager();
+        $lanes = $manager->getRepository(Lane::class)->findAll();
+
+        if ($request->request->count() > 0) {
+            $password = $this->generateRandomString(15);
+            $user = new User();
+            $now = new DateTime();
+
+            $user->setNickname($request->request->get("nickname"));
+            $user->setPassword($encoder->encodePassword($user, $password));
+            $user->setEmail($request->request->get("email"));
+            $user->setLane($manager->getRepository(Lane::class)->find($request->request->get("lane")));
+            $user->setIsActivated(true);
+            $user->setRegisterAt($now);
+            $user->setLastUpdateAt($now);
+
+            $manager->persist($user);
+            $manager->flush();
+
+            try {
+                $emailSender->send($user->getEmail(), "Ton compte a été créé", "emails/pages/accountcreated.html.twig", [
+                    "user" => $user,
+                    "password" => $password
+                ]);
+
+                $this->addFlash("success", "Le compte utilisateur a été créé.");
+                return $this->redirectToRoute("admin_users");
+            } catch (TransportExceptionInterface $e) {
+                $this->addFlash("danger", "Erreur lors de l'envoi de l'e-mail : " . $e->getMessage());
+                return $this->redirectToRoute("admin_user_new");
+            }
+        }
+
+        return $this->render("site/pages/admin/users/user.new.html.twig", [
+            "lanes" => $lanes
         ]);
     }
 

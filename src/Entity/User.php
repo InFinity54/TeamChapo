@@ -24,7 +24,7 @@ class User implements UserInterface
     private $nickname;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $email;
 

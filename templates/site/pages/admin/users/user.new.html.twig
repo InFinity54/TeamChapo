@@ -1,10 +1,9 @@
 {% extends "site/base.html.twig" %}
 
-{% block title %}Profil{% endblock %}
+{% block title %}Administration > Utilisateurs > Nouvel utilisateur{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/bootstrap-select/css/bootstrap-select.min.css") }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/dropify/css/dropify.min.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/forms.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/selectpicker.css") }}" />
 {% endblock %}
@@ -14,16 +13,12 @@
     <script type="text/javascript" src="{{ asset("assets/vendor/jquery-validate/localization/messages_fr.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("assets/vendor/bootstrap-select/js/bootstrap-select.min.js") }}"></script>
     <script type="text/javascript" src="{{ asset("assets/vendor/bootstrap-select/js/i18n/defaults-fr_FR.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("assets/vendor/dropify/js/dropify.min.js") }}"></script>
-    <script type="text/javascript" src="{{ asset("assets/js/pages/profile.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/pages/user.new.js") }}"></script>
 {% endblock %}
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Profil</h1>
-        <a href="{{ path("profile_password") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-key fa-sm"></i> Modifier le mot de passe
-        </a>
+        <h1 class="h3 mb-0 text-gray-800">Créer un nouvel utilisateur</h1>
     </div>
 
     <div class="row">
@@ -37,32 +32,24 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <label for="nickname">Pseudo</label>
-                                <input type="text" class="form-control" id="nickname" name="nickname" readonly value="{{ user.nickname }}" />
+                                <input type="text" class="form-control" id="nickname" name="nickname" required />
                             </div>
                             <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0">
                                 <label for="email">Adresse e-mail</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" />
+                                <input type="email" class="form-control" id="email" name="email" />
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-sm-12">
                                 <label for="lane">Poste dans l'équipe</label>
                                 <select class="selectpicker form-control" id="lane" name="lane">
-                                    {% if user.lane is null %}
                                     <option selected value="" hidden>Choisis un poste...</option>
-                                    {% endif %}
                                     {% for lane in lanes %}
-                                        <option value="{{ lane.id }}" {% if user.lane is not null and user.lane.id is same as(lane.id) %}selected{% endif %} {% if lane.name == "Aléatoire" %}hidden{% endif %}>
+                                        <option value="{{ lane.id }}" {% if lane.name == "Aléatoire" %}hidden{% endif %}>
                                             {{ lane.name }}
                                         </option>
                                     {% endfor %}
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-sm-12">
-                                <label for="picture">Photo</label>
-                                <input type="file" name="picture" id="picture" data-default-file="{{ asset("assets/img/avatars/" ~ user.picture) }}" data-min-width="100%" data-max-width="100%" data-height="350" data-allowed-file-extensions="jpg jpeg gif png" />
                             </div>
                         </div>
                         <div class="row mt-5">

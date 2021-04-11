@@ -1,0 +1,33 @@
+{% extends "emails/base.html.twig" %}
+
+{% block body %}
+    <div style="width: 100%; text-align: left; color: black;">
+        <h2>{{ user.nickname }},</h2>
+
+        <p>
+            Un compte utilisateur a été créé pour toi sur le site de la Team Chapo.
+        </p>
+
+        <p>
+            Ce compte permet d'accéder au site en tant que membre de l'équipe, et de modifier le contenu de certaines pages.
+            <br />
+            C'est le cas, notamment, sur ton profil et le pool de champions.
+        </p>
+
+        <p>
+            Afin de te connecter à ton compte, voici tes identifiants.
+            <br />
+            <u>Identifiant :</u> {{ user.nickname }}
+            <br />
+            <u>Mot de passe :</u> {{ password }}
+        </p>
+
+        <p>
+            Ce mot de passe a été généré aléatoirement par le site avant l'envoi de cet e-mail, et ne sera pas conservé tel quel. Il a été crypté et ne pourra pas être récupéré.
+            <br />
+            En cas d'oubli de ton mot de passe, tu peux utiliser <a href="{{ absolute_url(path("password")) }}"> le formulaire de mot de passe oublié</a> ou t'adresser à un administrateur du site, qui se chargera de démarrer cette procédure pour toi.
+        </p>
+
+        <p>La Team Chapo.</p>
+    </div>
+{% endblock %}
