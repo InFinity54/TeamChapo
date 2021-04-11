@@ -28,6 +28,13 @@
         </a>
     </li>
 
+    <li class="nav-item {% if app.request.pathinfo starts with '/team/pool' %}active{% endif %}">
+        <a class="nav-link" href="{{ path("team_pool") }}">
+            <i class="fas fa-hand-holding-heart"></i>
+            <span>Pool de champions</span>
+        </a>
+    </li>
+
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">

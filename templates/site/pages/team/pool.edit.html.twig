@@ -1,0 +1,75 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Équipe > Pool de champions > Modifier mon pool{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/bootstrap-select/css/bootstrap-select.min.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/forms.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/selectpicker.css") }}" />
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ asset("assets/vendor/jquery-validate/jquery.validate.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/vendor/jquery-validate/localization/messages_fr.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/vendor/bootstrap-select/js/bootstrap-select.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/vendor/bootstrap-select/js/i18n/defaults-fr_FR.min.js") }}"></script>
+    <script type="text/javascript" src="{{ asset("assets/js/pages/pool.edit.js") }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Modifier le pool de champions</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Pool de champions</h6>
+                    <a href="{{ path("team_pool") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-list fa-sm"></i> Revenir à la liste
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form id="pool-form" method="post">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="primaryPool">Champions maitrisés</label>
+                                <select class="selectpicker form-control show-tick" id="primaryPool" name="primaryPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
+                                    {% for champion in champions %}
+                                        <option value="{{ champion.id }}" {% if champion in pool.primaryPool %}selected{% endif %}>{{ champion.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-sm-12">
+                                <label for="secondaryPool">Champions intéressants ou en cours de maitrise</label>
+                                <select class="selectpicker form-control show-tick" id="secondaryPool" name="secondaryPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
+                                    {% for champion in champions %}
+                                        <option value="{{ champion.id }}" {% if champion in pool.secondaryPool %}selected{% endif %}>{{ champion.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-sm-12">
+                                <label for="excludedPool">Champions exclus d'office</label>
+                                <select class="selectpicker form-control show-tick" id="excludedPool" name="excludedPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
+                                    {% for champion in champions %}
+                                        <option value="{{ champion.id }}" {% if champion in pool.excludedPool %}selected{% endif %}>{{ champion.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary btn-block">Enregistrer les modifications</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

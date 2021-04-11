@@ -1,0 +1,81 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Équipe > Pool de champions{% endblock %}
+
+{% block css %}{% endblock %}
+{% block js %}{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Pool de champions de l'équipe</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Pool de champions</h6>
+                    <a href="{{ path("team_pool_edit") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-edit fa-sm"></i> Modifier mon pool de champions
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped w-100">
+                        <thead class="text-center">
+                            <th>Joueur</th>
+                            <th>Champions maitrisés</th>
+                            <th>Champions intéressants ou en cours de maitrise</th>
+                            <th>Champions exclus d'office</th>
+                        </thead>
+                        {% for user in users %}
+                            <tr class="text-center">
+                                <td class="align-middle">
+                                    <img class="" src="{{ asset("riot/lol/lanes/" ~ user.lane.image) }}" alt="{{ user.lane.name }}" title="{{ user.lane.name }}" width="30" height="auto" /> {{ user.nickname }}
+                                </td>
+                                {% if user.pool is not null %}
+                                        <td class="align-middle">
+                                            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                                                {% for champion in user.pool.primaryPool %}
+                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" />
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                                                {% for champion in user.pool.secondaryPool %}
+                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" />
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                                                {% for champion in user.pool.excludedPool %}
+                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" />
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                {% else %}
+                                        <td class="align-middle">
+                                            Ce joueur n'a pas encore choisi de champions.
+                                        </td>
+                                        <td class="align-middle">
+                                            Ce joueur n'a pas encore choisi de champions.
+                                        </td>
+                                        <td class="align-middle">
+                                            Ce joueur n'a pas encore choisi de champions.
+                                        </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        <tfoot class="text-center">
+                            <th></th>
+                            <th>Champions maitrisés</th>
+                            <th>Champions intéressants ou en cours de maitrise</th>
+                            <th>Champions exclus d'office</th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -73,6 +73,11 @@ class User implements UserInterface
      */
     private $tokenExpDate;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Pool::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $pool;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -237,5 +242,22 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getPool(): ?Pool
+    {
+        return $this->pool;
+    }
+
+    public function setPool(Pool $pool): self
+    {
+        // set the owning side of the relation if necessary
+        if ($pool->getUser() !== $this) {
+            $pool->setUser($this);
+        }
+
+        $this->pool = $pool;
+
+        return $this;
     }
 }
