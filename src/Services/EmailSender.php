@@ -5,7 +5,6 @@ use Swift_Image;
 use Swift_Mailer;
 use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Mime\Address;
 
 class EmailSender extends AbstractController
 {
@@ -26,7 +25,8 @@ class EmailSender extends AbstractController
     public function send(string $to, string $subject, string $template, array $context): void
     {
         $email = (new Swift_Message())
-            ->setSender($_ENV["TEAMCHAPO_SENDMAIL"])
+            ->setFrom($_ENV["TEAMCHAPO_SENDMAIL"], "Team Chapo")
+            ->setSender($_ENV["TEAMCHAPO_SENDMAIL"], "Team Chapo")
             ->setTo($to)
             ->setSubject($subject)
         ;
