@@ -5,10 +5,10 @@ use App\Entity\User;
 use App\Services\EmailSender;
 use App\Traits\TokenGenerator;
 use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -44,7 +44,7 @@ class PasswordController extends AbstractController
                         ]);
 
                         return $this->render('auth/pages/passwordlinksent.html.twig');
-                    } catch (TransportExceptionInterface $e) {
+                    } catch (Exception $e) {
                         $this->addFlash("danger", "Erreur lors de l'envoi de l'e-mail : " . $e->getMessage());
                         return $this->redirectToRoute("password");
                     }

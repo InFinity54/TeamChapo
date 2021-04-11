@@ -6,9 +6,9 @@ use App\Entity\User;
 use App\Services\EmailSender;
 use App\Traits\TokenGenerator;
 use DateTime;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -81,7 +81,7 @@ class AdminUsersController extends AbstractController
 
                 $this->addFlash("success", "Le compte utilisateur a été créé.");
                 return $this->redirectToRoute("admin_users");
-            } catch (TransportExceptionInterface $e) {
+            } catch (Exception $e) {
                 $this->addFlash("danger", "Erreur lors de l'envoi de l'e-mail : " . $e->getMessage());
                 return $this->redirectToRoute("admin_user_new");
             }
@@ -190,7 +190,7 @@ class AdminUsersController extends AbstractController
 
                     $this->addFlash("success", "L'utilisateur a reçu l'e-mail de réinitialisation de son mot de passe.");
                     return $this->redirectToRoute("admin_users");
-                } catch (TransportExceptionInterface $e) {
+                } catch (Exception $e) {
                     $this->addFlash("danger", "Erreur lors de l'envoi de l'e-mail : " . $e->getMessage());
                     return $this->redirectToRoute("admin_users");
                 }
