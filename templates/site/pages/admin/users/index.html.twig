@@ -1,0 +1,59 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Administration > Utilisateurs{% endblock %}
+
+{% block css %}{% endblock %}
+{% block js %}{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Liste des utilisateurs</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Utilisateurs</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead class="text-center">
+                            <th>Pseudo</th>
+                            <th>Date d'inscription</th>
+                            <th>Date de dernière modification</th>
+                            <th></th>
+                        </thead>
+                        {% for user in users %}
+                            <tr class="text-center">
+                                <td>{{ user.nickname }}</td>
+                                <td>{{ user.registerAt|date("d/m/Y") }} à {{ user.registerAt|date("H:i") }}</td>
+                                <td>{{ user.lastUpdateAt|date("d/m/Y") }} à {{ user.lastUpdateAt|date("H:i") }}</td>
+                                <td>
+                                    <a href="{{ path("admin_user_passwordreset", { id: user.id }) }}" class="btn btn-sm btn-dark rounded-circle" title="Réinitialiser le mot de passe">
+                                        <i class="fas fa-key"></i>
+                                    </a>
+                                    {% if user.isActivated %}
+                                        <a href="{{ path("admin_user_disable", { id: user.id }) }}" class="btn btn-sm btn-danger rounded-circle" title="Désactiver le compte">
+                                            <i class="fas fa-user-times"></i>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path("admin_user_enable", { id: user.id }) }}" class="btn btn-sm btn-success rounded-circle" title="Activer le compte">
+                                            <i class="fas fa-user-check"></i>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tfoot class="text-center">
+                            <th>Pseudo</th>
+                            <th>Date d'inscription</th>
+                            <th>Date de dernière modification</th>
+                            <th></th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

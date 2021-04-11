@@ -3,9 +3,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Services\EmailSender;
+use App\Traits\TokenGenerator;
 use DateTime;
-use DateTimeZone;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +14,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class PasswordController extends AbstractController
 {
+    use TokenGenerator;
+
     /**
      * @Route("/password", name="password")
      */
@@ -58,23 +59,6 @@ class PasswordController extends AbstractController
         }
 
         return $this->render('auth/pages/password.html.twig');
-    }
-
-    private function generateRandomString(): string
-    {
-        try {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $charactersLength = strlen($characters);
-            $randomString = '';
-
-            for ($i = 0; $i < 30; $i++) {
-                $randomString .= $characters[random_int(0, $charactersLength - 1)];
-            }
-
-            return $randomString;
-        } catch (Exception $e) {
-            return "";
-        }
     }
 
     /**

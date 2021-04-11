@@ -69,8 +69,11 @@ class TeamChapoAuthenticator extends AbstractFormLoginAuthenticator implements P
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['nickname' => $credentials['nickname']]);
 
         if (!$user) {
-            // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Aucun compte utilisant ce pseudo n\'a été trouvé.');
+        }
+
+        if (!$user->getIsActivated()) {
+            throw new CustomUserMessageAuthenticationException('Ce compte est désactivé.');
         }
 
         return $user;

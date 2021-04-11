@@ -1,12 +1,12 @@
 <?php
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Champion;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdminController extends AbstractController
+class AdminChampionsController extends AbstractController
 {
     /**
      * @Route("/admin/champions/refresh", name="admin_champions_refresh")

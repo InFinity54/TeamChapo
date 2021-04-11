@@ -15,9 +15,11 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Pool de champions</h6>
-                    <a href="{{ path("team_pool_edit") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-                        <i class="fas fa-edit fa-sm"></i> Modifier mon pool de champions
-                    </a>
+                    {% if app.user is not null %}
+                        <a href="{{ path("team_pool_edit") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-edit fa-sm"></i> Modifier mon pool de champions
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="card-body">
                     <table class="table table-striped w-100">
