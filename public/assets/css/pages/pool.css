@@ -1,0 +1,7 @@
+table td:first-child {
+    width: 16%;
+}
+
+table td:not(:first-child) {
+    width: 28%;
+}
