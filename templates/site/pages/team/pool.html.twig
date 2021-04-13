@@ -3,9 +3,11 @@
 {% block title %}Équipe > Pool de champions{% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/pages/pool.edit.css") }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset("assets/css/pages/pool.css") }}" />
 {% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{ asset("assets/js/tooltips.js") }}"></script>
+{% endblock %}
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -40,21 +42,21 @@
                                         <td class="align-middle">
                                             <div class="d-flex flex-wrap justify-content-center align-items-center">
                                                 {% for champion in user.pool.primaryPool %}
-                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" />
+                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                                 {% endfor %}
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex flex-wrap justify-content-center align-items-center">
                                                 {% for champion in user.pool.secondaryPool %}
-                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" />
+                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                                 {% endfor %}
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex flex-wrap justify-content-center align-items-center">
                                                 {% for champion in user.pool.excludedPool %}
-                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" />
+                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                                 {% endfor %}
                                             </div>
                                         </td>

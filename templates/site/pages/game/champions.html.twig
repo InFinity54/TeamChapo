@@ -3,7 +3,9 @@
 {% block title %}League of Legends > Champions{% endblock %}
 
 {% block css %}{% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{ asset("assets/js/tooltips.js") }}"></script>
+{% endblock %}
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -21,7 +23,7 @@
                         <div class="row">
                             {% for champion in champions %}
                                 <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-4 text-center">
-                                    <img src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" width="50%" height="auto" />
+                                    <img src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" width="50%" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ champion.name }}" />
                                     <br />
                                     {{ champion.name }}
                                 </div>
