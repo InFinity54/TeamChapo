@@ -3,6 +3,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Lane;
 use App\Entity\User;
+use App\Services\AvatarUpload;
 use App\Services\EmailSender;
 use App\Traits\TokenGenerator;
 use DateTime;
@@ -42,7 +43,7 @@ class AdminUsersController extends AbstractController
     /**
      * @Route("/admin/users/new", name="admin_user_new")
      */
-    public function adminUserNew(Request $request, UserPasswordEncoderInterface $encoder, EmailSender $emailSender)
+    public function adminUserNew(Request $request, UserPasswordEncoderInterface $encoder, EmailSender $emailSender, AvatarUpload $avatarUpload)
     {
         if (!$this->getUser()) {
             $this->addFlash("danger", "Tu dois être connecté(e) pour accéder à cette page.");
@@ -70,6 +71,20 @@ class AdminUsersController extends AbstractController
             $user->setRegisterAt($now);
             $user->setLastUpdateAt($now);
 
+            if ($request->request->get("puuid")) {
+                $user->setPuuid($request->request->get("puuid"));
+            }
+
+            if ($request->files->get("picture")) {
+                $uploadResult = $avatarUpload->upload($request->files->get("picture"), $user);
+
+                if ($uploadResult !== null) {
+                    $user->setPicture($uploadResult);
+                } else {
+                    $this->addFlash("danger", "Une erreur est survenue durant l'enregistrement de la photo de profil de l'utilisateur.");
+                }
+            }
+
             $manager->persist($user);
             $manager->flush();
 
@@ -78,18 +93,81 @@ class AdminUsersController extends AbstractController
                     "user" => $user,
                     "password" => $password
                 ]);
-
-                $this->addFlash("success", "Le compte utilisateur a été créé.");
-                return $this->redirectToRoute("admin_users");
             } catch (Exception $e) {
-                $this->addFlash("danger", "Erreur lors de l'envoi de l'e-mail : " . $e->getMessage());
-                return $this->redirectToRoute("admin_user_new");
+                $this->addFlash("danger", "Erreur lors de l'envoi de l'e-mail contenant les identifiants : " . $e->getMessage());
             }
+
+            $this->addFlash("success", "Le compte utilisateur a été créé.");
+            return $this->redirectToRoute("admin_users");
         }
 
         return $this->render("site/pages/admin/users/user.new.html.twig", [
             "lanes" => $lanes
         ]);
+    }
+
+    /**
+     * @Route("/admin/users/{id}/edit", name="admin_user_edit")
+     */
+    public function adminUserEdit(int $id, Request $request, UserPasswordEncoderInterface $encoder, EmailSender $emailSender, AvatarUpload $avatarUpload)
+    {
+        if (!$this->getUser()) {
+            $this->addFlash("danger", "Tu dois être connecté(e) pour accéder à cette page.");
+            return $this->redirectToRoute("login");
+        }
+
+        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
+            $this->addFlash("danger", "Tu ne disposes pas des droits nécessaires pour accéder à cette page.");
+            return $this->redirectToRoute("homepage");
+        }
+
+        $manager = $this->getDoctrine()->getManager();
+        $user = $manager->getRepository(User::class)->find($id);
+        $lanes = $manager->getRepository(Lane::class)->findAll();
+
+        if ($user) {
+            if ($request->request->count() > 0) {
+                $password = $this->generateRandomString(15);
+                $now = new DateTime();
+
+                $user->setNickname($request->request->get("nickname"));
+                $user->setPassword($encoder->encodePassword($user, $password));
+                $user->setEmail($request->request->get("email"));
+                $user->setLane($manager->getRepository(Lane::class)->find($request->request->get("lane")));
+                $user->setIsActivated(true);
+                $user->setLastUpdateAt($now);
+
+                if ($request->request->get("puuid")) {
+                    $user->setPuuid($request->request->get("puuid"));
+                } else {
+                    $user->setPuuid(null);
+                }
+
+                if ($request->files->get("picture")) {
+                    $uploadResult = $avatarUpload->upload($request->files->get("picture"), $user);
+
+                    if ($uploadResult !== null) {
+                        $user->setPicture($uploadResult);
+                    } else {
+                        $this->addFlash("danger", "Une erreur est survenue durant l'enregistrement de la photo de profil de l'utilisateur.");
+                    }
+                }
+
+                $manager->persist($user);
+                $manager->flush();
+
+                $this->addFlash("success", "Les modifications apportées à " . $user->getNickname() . " ont été enregistrées.");
+                return $this->redirectToRoute("admin_user_edit", [ "id" => $user->getId() ]);
+            }
+
+            return $this->render("site/pages/admin/users/user.edit.html.twig", [
+                "lanes" => $lanes,
+                "user" => $user
+            ]);
+        }
+
+        $this->addFlash("danger", "L'utilisateur demandé est introuvable dans la base de données.");
+        return $this->redirectToRoute("admin_users");
     }
 
     /**

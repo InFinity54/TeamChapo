@@ -1,6 +1,6 @@
 {% extends "site/base.html.twig" %}
 
-{% block title %}Administration > Utilisateurs > Nouvel utilisateur{% endblock %}
+{% block title %}Administration > Utilisateurs > Éditer un utilisateur{% endblock %}
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="{{ asset("assets/vendor/bootstrap-select/css/bootstrap-select.min.css") }}"/>
@@ -20,7 +20,7 @@
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Créer un nouvel utilisateur</h1>
+        <h1 class="h3 mb-0 text-gray-800">Édition d'un utilisateur</h1>
     </div>
 
     <div class="row">
@@ -30,21 +30,22 @@
                     <h6 class="m-0 font-weight-bold text-primary">Informations de base</h6>
                 </div>
                 <div class="card-body">
-                    <form id="newuser-form" method="post">
+                    <form id="edituser-form" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="userid" name="userid" value="{{ user.id }}" />
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <label for="nickname">Pseudo</label>
-                                <input type="text" class="form-control" id="nickname" name="nickname" required />
+                                <input type="text" class="form-control" id="nickname" name="nickname" required value="{{ user.nickname }}" />
                             </div>
                             <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0">
                                 <label for="email">Adresse e-mail</label>
-                                <input type="email" class="form-control" id="email" name="email" required />
+                                <input type="email" class="form-control" id="email" name="email" required value="{{ user.email }}" />
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-sm-12">
                                 <label for="puuid">Identifiant unique Riot</label>
-                                <input type="text" class="form-control" id="puuid" name="puuid" />
+                                <input type="text" class="form-control" id="puuid" name="puuid" value="{{ user.puuid }}" />
                             </div>
                         </div>
                         <div class="row mt-5">
@@ -53,7 +54,7 @@
                                 <select class="selectpicker form-control" id="lane" name="lane">
                                     <option selected value="" hidden>Choisis un poste...</option>
                                     {% for lane in lanes %}
-                                        <option value="{{ lane.id }}" {% if lane.name == "Aléatoire" %}hidden{% endif %}>
+                                        <option value="{{ lane.id }}" {% if user.lane is not null and user.lane.id is same as(lane.id) %}selected{% endif %} {% if lane.name == "Aléatoire" %}hidden{% endif %}>
                                             {{ lane.name }}
                                         </option>
                                     {% endfor %}
@@ -63,12 +64,12 @@
                         <div class="row mt-5">
                             <div class="col-sm-12">
                                 <label for="picture">Photo</label>
-                                <input type="file" name="picture" id="picture" data-min-width="100%" data-max-width="100%" data-height="350" data-allowed-file-extensions="jpg jpeg gif png" />
+                                <input type="file" name="picture" id="picture" data-default-file="{{ asset("assets/img/avatars/" ~ user.picture) }}" data-min-width="100%" data-max-width="100%" data-height="350" data-allowed-file-extensions="jpg jpeg gif png" />
                             </div>
                         </div>
                         <div class="row mt-5">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-primary btn-block">Créer l'utilisateur</button>
+                                <button type="submit" class="btn btn-primary btn-block">Enregistrer les modifications</button>
                             </div>
                         </div>
                     </form>

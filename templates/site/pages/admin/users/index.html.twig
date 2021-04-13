@@ -31,19 +31,24 @@
                         </thead>
                         {% for user in users %}
                             <tr class="text-center">
-                                <td>{{ user.nickname }}</td>
-                                <td>{{ user.registerAt|date("d/m/Y") }} à {{ user.registerAt|date("H:i") }}</td>
-                                <td>{{ user.lastUpdateAt|date("d/m/Y") }} à {{ user.lastUpdateAt|date("H:i") }}</td>
-                                <td>
-                                    <a href="{{ path("admin_user_passwordreset", { id: user.id }) }}" class="btn btn-sm btn-dark rounded-circle" title="Réinitialiser le mot de passe">
+                                <td class="align-middle">
+                                    <img class="img-profile rounded-circle mr-1" src="{{ asset("assets/img/avatars/" ~ user.picture) }}" alt="" width="auto" height="40" /> {{ user.nickname }}
+                                </td>
+                                <td class="align-middle">{{ user.registerAt|date("d/m/Y") }} à {{ user.registerAt|date("H:i") }}</td>
+                                <td class="align-middle">{{ user.lastUpdateAt|date("d/m/Y") }} à {{ user.lastUpdateAt|date("H:i") }}</td>
+                                <td class="align-middle">
+                                    <a href="{{ path("admin_user_edit", { id: user.id }) }}" class="btn btn-sm btn-primary rounded-circle" title="Éditer le compte de {{ user.nickname }}">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{{ path("admin_user_passwordreset", { id: user.id }) }}" class="btn btn-sm btn-dark rounded-circle" title="Réinitialiser le mot de passe du compte de {{ user.nickname }}">
                                         <i class="fas fa-key"></i>
                                     </a>
                                     {% if user.isActivated %}
-                                        <a href="{{ path("admin_user_disable", { id: user.id }) }}" class="btn btn-sm btn-danger rounded-circle" title="Désactiver le compte">
+                                        <a href="{{ path("admin_user_disable", { id: user.id }) }}" class="btn btn-sm btn-danger rounded-circle" title="Désactiver le compte de {{ user.nickname }}">
                                             <i class="fas fa-user-times"></i>
                                         </a>
                                     {% else %}
-                                        <a href="{{ path("admin_user_enable", { id: user.id }) }}" class="btn btn-sm btn-success rounded-circle" title="Activer le compte">
+                                        <a href="{{ path("admin_user_enable", { id: user.id }) }}" class="btn btn-sm btn-success rounded-circle" title="Activer le compte de {{ user.nickname }}">
                                             <i class="fas fa-user-check"></i>
                                         </a>
                                     {% endif %}

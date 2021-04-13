@@ -1,8 +1,14 @@
 $("#profile-form").validate({
     rules: {
+        nickname: {
+            required: true
+        },
         email: {
             required: true,
             email: true
+        },
+        puuid: {
+            required: false
         },
         picture: {
             required: false
@@ -11,7 +17,6 @@ $("#profile-form").validate({
             required: true
         }
     },
-    ignore: "#nickname",
     errorClass: "is-invalid",
     validClass: "is-valid"
 });

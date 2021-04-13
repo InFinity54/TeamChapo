@@ -37,11 +37,17 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
                                 <label for="nickname">Pseudo</label>
-                                <input type="text" class="form-control" id="nickname" name="nickname" readonly value="{{ user.nickname }}" />
+                                <input type="text" class="form-control" id="nickname" name="nickname" readonly required value="{{ user.nickname }}" />
                             </div>
                             <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0">
                                 <label for="email">Adresse e-mail</label>
-                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" />
+                                <input type="email" class="form-control" id="email" name="email" required value="{{ user.email }}" />
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-sm-12">
+                                <label for="puuid">Identifiant unique Riot</label>
+                                <input type="text" class="form-control" id="puuid" name="puuid" readonly value="{{ user.puuid }}" />
                             </div>
                         </div>
                         <div class="row mt-5">

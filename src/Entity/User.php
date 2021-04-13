@@ -78,6 +78,11 @@ class User implements UserInterface
      */
     private $pool;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $puuid;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -257,6 +262,18 @@ class User implements UserInterface
         }
 
         $this->pool = $pool;
+
+        return $this;
+    }
+
+    public function getPuuid(): ?string
+    {
+        return $this->puuid;
+    }
+
+    public function setPuuid(?string $puuid): self
+    {
+        $this->puuid = $puuid;
 
         return $this;
     }
