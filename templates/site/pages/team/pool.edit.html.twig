@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="primaryPool">Champions maitrisés</label>
-                                <select class="selectpicker form-control show-tick" id="primaryPool" name="primaryPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
+                                <select class="selectpicker form-control show-tick poolSelect" id="primaryPool" name="primaryPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
                                     {% for champion in champions %}
                                         <option value="{{ champion.id }}" {% if champion in pool.primaryPool %}selected{% endif %}>{{ champion.name }}</option>
                                     {% endfor %}
@@ -45,7 +45,7 @@
                         <div class="row mt-5">
                             <div class="col-sm-12">
                                 <label for="secondaryPool">Champions intéressants ou en cours de maitrise</label>
-                                <select class="selectpicker form-control show-tick" id="secondaryPool" name="secondaryPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
+                                <select class="selectpicker form-control show-tick poolSelect" id="secondaryPool" name="secondaryPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
                                     {% for champion in champions %}
                                         <option value="{{ champion.id }}" {% if champion in pool.secondaryPool %}selected{% endif %}>{{ champion.name }}</option>
                                     {% endfor %}
@@ -55,7 +55,7 @@
                         <div class="row mt-5">
                             <div class="col-sm-12">
                                 <label for="excludedPool">Champions exclus d'office</label>
-                                <select class="selectpicker form-control show-tick" id="excludedPool" name="excludedPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
+                                <select class="selectpicker form-control show-tick poolSelect" id="excludedPool" name="excludedPool[]" multiple data-live-search="true" title="Choisis un ou plusieurs champions..." data-selected-text-format="count > 5" data-size="10">
                                     {% for champion in champions %}
                                         <option value="{{ champion.id }}" {% if champion in pool.excludedPool %}selected{% endif %}>{{ champion.name }}</option>
                                     {% endfor %}
