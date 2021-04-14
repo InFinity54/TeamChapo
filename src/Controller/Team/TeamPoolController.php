@@ -18,7 +18,7 @@ class TeamPoolController extends AbstractController
         $manager = $this->getDoctrine()->getManager();
         $users = $manager->getRepository(User::class)->findAll();
 
-        return $this->render("site/pages/team/pool.html.twig", [
+        return $this->render("site/pages/team/pool/index.html.twig", [
             "users" => $users
         ]);
     }
@@ -79,7 +79,7 @@ class TeamPoolController extends AbstractController
                 $this->addFlash("success", "Les modifications ont été enregistrées.");
             }
 
-            return $this->render("site/pages/team/pool.edit.html.twig", [
+            return $this->render("site/pages/team/pool/edit.html.twig", [
                 "pool" => $pool,
                 "champions" => $champions
             ]);
