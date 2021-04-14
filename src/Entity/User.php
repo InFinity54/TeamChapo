@@ -64,6 +64,11 @@ class User implements UserInterface
     private $riotAccountId;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $riotId;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isActivated;
@@ -202,6 +207,18 @@ class User implements UserInterface
     public function setRiotAccountId(?string $riotAccountId): self
     {
         $this->riotAccountId = $riotAccountId;
+
+        return $this;
+    }
+
+    public function getRiotId(): ?string
+    {
+        return $this->riotId;
+    }
+
+    public function setRiotId(?string $riotId): self
+    {
+        $this->riotId = $riotId;
 
         return $this;
     }

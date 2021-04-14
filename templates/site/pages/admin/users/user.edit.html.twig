@@ -43,13 +43,17 @@
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <div class="col-sm-12 col-md-6">
-                                <label for="puuid">Identifiant unique global Riot Games (PUUID) (PUUID)</label>
-                                <input type="text" class="form-control" id="puuid" name="puuid" value="{{ user.riotPuuid }}" />
+                            <div class="col-sm-12 col-md-4">
+                                <label for="riotPuuid">Identifiant unique global Riot Games</label>
+                                <input type="text" class="form-control" id="riotPuuid" name="riotPuuid" value="{{ user.riotPuuid }}" />
                             </div>
-                            <div class="col-sm-12 col-md-6 mt-sm-5 mt-md-0">
-                                <label for="accountId">Identifiant unique serveur Riot Games (AccountID)</label>
-                                <input type="text" class="form-control" id="accountId" name="accountId" value="{{ user.riotAccountId }}" />
+                            <div class="col-sm-12 col-md-4 mt-sm-5 mt-md-0">
+                                <label for="riotAccountId">Identifiant unique serveur Riot Games</label>
+                                <input type="text" class="form-control" id="riotAccountId" name="riotAccountId" value="{{ user.riotAccountId }}" />
+                            </div>
+                            <div class="col-sm-12 col-md-4 mt-sm-5 mt-md-0">
+                                <label for="riotId">Identifiant Riot Games</label>
+                                <input type="text" class="form-control" id="riotId" name="riotId" value="{{ user.riotAccountId }}" />
                             </div>
                         </div>
                         <div class="row mt-5">

@@ -7,10 +7,13 @@ $("#newuser-form").validate({
             required: true,
             email: true
         },
-        puuid: {
+        riotPuuid: {
             required: false
         },
-        accountId: {
+        riotAccountId: {
+            required: false
+        },
+        riotId: {
             required: false
         },
         picture: {

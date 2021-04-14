@@ -29,6 +29,7 @@
                             <th>Date de dernière modification</th>
                             <th>Riot PUUID</th>
                             <th>Riot Account ID</th>
+                            <th>Riot ID</th>
                             <th></th>
                         </thead>
                         {% for user in users %}
@@ -53,10 +54,17 @@
                                     {% endif %}
                                 </td>
                                 <td class="align-middle">
+                                    {% if user.riotId is not null %}
+                                        <span class="text-success"><i class="fas fa-check"></i> Oui</span>
+                                    {% else %}
+                                        <span class="text-danger"><i class="fas fa-times"></i> Non</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle">
                                     <a href="{{ path("admin_user_edit", { id: user.id }) }}" class="btn btn-sm btn-primary rounded-circle" title="Éditer le compte de {{ user.nickname }}">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="{{ path("admin_user_riotid", { id: user.id }) }}" class="btn btn-sm bg-gray-900 rounded-circle" title="Récupérer les identifiants Riot Games de {{ user.nickname }}">
+                                    <a href="{{ path("admin_user_riotids", { id: user.id }) }}" class="btn btn-sm bg-gray-900 rounded-circle" title="Récupérer les identifiants Riot Games de {{ user.nickname }}">
                                         <img src="{{ asset("assets/img/riotgames_icon.png") }}" alt="" width="auto" height="14" />
                                     </a>
                                     <a href="{{ path("admin_user_passwordreset", { id: user.id }) }}" class="btn btn-sm btn-dark rounded-circle" title="Réinitialiser le mot de passe du compte de {{ user.nickname }}">

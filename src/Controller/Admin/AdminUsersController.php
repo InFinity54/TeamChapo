@@ -72,8 +72,22 @@ class AdminUsersController extends AbstractController
             $user->setRegisterAt($now);
             $user->setLastUpdateAt($now);
 
-            if ($request->request->get("puuid")) {
-                $user->setPuuid($request->request->get("puuid"));
+            if ($request->request->get("riotPuuid")) {
+                $user->setRiotPuuid($request->request->get("puuid"));
+            } else {
+                $user->setRiotPuuid(null);
+            }
+
+            if ($request->request->get("riotAccountId")) {
+                $user->setRiotAccountId($request->request->get("riotAccountId"));
+            } else {
+                $user->setRiotAccountId(null);
+            }
+
+            if ($request->request->get("riotId")) {
+                $user->setRiotId($request->request->get("riotId"));
+            } else {
+                $user->setRiotId(null);
             }
 
             if ($request->files->get("picture")) {
@@ -138,16 +152,22 @@ class AdminUsersController extends AbstractController
                 $user->setIsActivated(true);
                 $user->setLastUpdateAt($now);
 
-                if ($request->request->get("puuid")) {
+                if ($request->request->get("riotPuuid")) {
                     $user->setRiotPuuid($request->request->get("puuid"));
                 } else {
                     $user->setRiotPuuid(null);
                 }
 
-                if ($request->request->get("accountId")) {
-                    $user->setRiotAccountId($request->request->get("accountId"));
+                if ($request->request->get("riotAccountId")) {
+                    $user->setRiotAccountId($request->request->get("riotAccountId"));
                 } else {
                     $user->setRiotAccountId(null);
+                }
+
+                if ($request->request->get("riotId")) {
+                    $user->setRiotId($request->request->get("riotId"));
+                } else {
+                    $user->setRiotId(null);
                 }
 
                 if ($request->files->get("picture")) {
@@ -290,9 +310,9 @@ class AdminUsersController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users/{id}/puuid", name="admin_user_riotid")
+     * @Route("/admin/users/{id}/riot-ids", name="admin_user_riotids")
      */
-    public function adminUserPUUID(int $id, RiotApiCaller $riotApi)
+    public function adminUserRiotIDs(int $id, RiotApiCaller $riotApi)
     {
         if (!$this->getUser()) {
             $this->addFlash("danger", "Tu dois être connecté(e) pour accéder à cette page.");
@@ -312,6 +332,7 @@ class AdminUsersController extends AbstractController
 
             $user->setRiotAccountId($summonerData["accountId"]);
             $user->setRiotPuuid($summonerData["puuid"]);
+            $user->setRiotId($summonerData["id"]);
 
             $manager->persist($user);
             $manager->flush();

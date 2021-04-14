@@ -82,10 +82,17 @@ class RiotApiCaller
 
         curl_setopt($curl, CURLOPT_URL, $domain . $url . $auth);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $output = json_decode(curl_exec($curl), true);
+        $result = json_decode(curl_exec($curl), true);
         curl_close($curl);
 
-        return $output;
+        if (isset($result["status"])) {
+            $errorCode = (isset($result["status"]["status_code"])) ? (int) $result["status"]["status_code"] : 500;
+            $errorMessage = (isset($result["status"]["message"])) ? $result["status"]["message"] : "Unknown error";
+
+            throw new Exception("Error during execution of Riot API Request : " . $errorMessage, $errorCode);
+        }
+
+        return $result;
     }
 
     public function getSummonerByName(string $summonerName, string $region): array
