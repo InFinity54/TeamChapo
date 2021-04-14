@@ -1,4 +1,4 @@
-$("#newuser-form").validate({
+$("#edituser-form").validate({
     rules: {
         nickname: {
             required: true

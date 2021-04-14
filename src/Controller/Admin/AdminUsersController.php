@@ -5,6 +5,7 @@ use App\Entity\Lane;
 use App\Entity\User;
 use App\Services\AvatarUpload;
 use App\Services\EmailSender;
+use App\Services\RiotApiCaller;
 use App\Traits\TokenGenerator;
 use DateTime;
 use Exception;
@@ -138,9 +139,15 @@ class AdminUsersController extends AbstractController
                 $user->setLastUpdateAt($now);
 
                 if ($request->request->get("puuid")) {
-                    $user->setPuuid($request->request->get("puuid"));
+                    $user->setRiotPuuid($request->request->get("puuid"));
                 } else {
-                    $user->setPuuid(null);
+                    $user->setRiotPuuid(null);
+                }
+
+                if ($request->request->get("accountId")) {
+                    $user->setRiotAccountId($request->request->get("accountId"));
+                } else {
+                    $user->setRiotAccountId(null);
                 }
 
                 if ($request->files->get("picture")) {
@@ -275,6 +282,41 @@ class AdminUsersController extends AbstractController
             }
 
             $this->addFlash("success", "L'utilisateur a été correctement désactivé.");
+            return $this->redirectToRoute("admin_users");
+        }
+
+        $this->addFlash("danger", "L'utilisateur est introuvable dans la base de données.");
+        return $this->redirectToRoute("admin_users");
+    }
+
+    /**
+     * @Route("/admin/users/{id}/puuid", name="admin_user_riotid")
+     */
+    public function adminUserPUUID(int $id, RiotApiCaller $riotApi)
+    {
+        if (!$this->getUser()) {
+            $this->addFlash("danger", "Tu dois être connecté(e) pour accéder à cette page.");
+            return $this->redirectToRoute("login");
+        }
+
+        if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
+            $this->addFlash("danger", "Tu ne disposes pas des droits nécessaires pour accéder à cette page.");
+            return $this->redirectToRoute("homepage");
+        }
+
+        $manager = $this->getDoctrine()->getManager();
+        $user = $manager->getRepository(User::class)->find($id);
+
+        if ($user) {
+            $summonerData = $riotApi->getSummonerByName($user->getNickname(), "EUW");
+
+            $user->setRiotAccountId($summonerData["accountId"]);
+            $user->setRiotPuuid($summonerData["puuid"]);
+
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash("success", "Les identifiants Riot Games de l'utilisateur ont été récupérés et enregistrés.");
             return $this->redirectToRoute("admin_users");
         }
 

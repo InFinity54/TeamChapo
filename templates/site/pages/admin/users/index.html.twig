@@ -27,6 +27,8 @@
                             <th>Pseudo</th>
                             <th>Date d'inscription</th>
                             <th>Date de dernière modification</th>
+                            <th>Riot PUUID</th>
+                            <th>Riot Account ID</th>
                             <th></th>
                         </thead>
                         {% for user in users %}
@@ -37,8 +39,25 @@
                                 <td class="align-middle">{{ user.registerAt|date("d/m/Y") }} à {{ user.registerAt|date("H:i") }}</td>
                                 <td class="align-middle">{{ user.lastUpdateAt|date("d/m/Y") }} à {{ user.lastUpdateAt|date("H:i") }}</td>
                                 <td class="align-middle">
+                                    {% if user.riotPuuid is not null %}
+                                        <span class="text-success"><i class="fas fa-check"></i> Oui</span>
+                                    {% else %}
+                                        <span class="text-danger"><i class="fas fa-times"></i> Non</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle">
+                                    {% if user.riotAccountId is not null %}
+                                        <span class="text-success"><i class="fas fa-check"></i> Oui</span>
+                                    {% else %}
+                                        <span class="text-danger"><i class="fas fa-times"></i> Non</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle">
                                     <a href="{{ path("admin_user_edit", { id: user.id }) }}" class="btn btn-sm btn-primary rounded-circle" title="Éditer le compte de {{ user.nickname }}">
                                         <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{{ path("admin_user_riotid", { id: user.id }) }}" class="btn btn-sm bg-gray-900 rounded-circle" title="Récupérer les identifiants Riot Games de {{ user.nickname }}">
+                                        <img src="{{ asset("assets/img/riotgames_icon.png") }}" alt="" width="auto" height="14" />
                                     </a>
                                     <a href="{{ path("admin_user_passwordreset", { id: user.id }) }}" class="btn btn-sm btn-dark rounded-circle" title="Réinitialiser le mot de passe du compte de {{ user.nickname }}">
                                         <i class="fas fa-key"></i>

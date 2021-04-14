@@ -10,6 +10,9 @@ $("#profile-form").validate({
         puuid: {
             required: false
         },
+        accountId: {
+            required: false
+        },
         picture: {
             required: false
         },
