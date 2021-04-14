@@ -49,6 +49,21 @@ class User implements UserInterface
     private $lane;
 
     /**
+     * @ORM\OneToOne(targetEntity=Pool::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $pool;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $riotPuuid;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $riotAccountId;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $isActivated;
@@ -72,16 +87,6 @@ class User implements UserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $tokenExpDate;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Pool::class, mappedBy="user", cascade={"persist", "remove"})
-     */
-    private $pool;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $puuid;
 
     public function getId(): ?int
     {
@@ -156,6 +161,47 @@ class User implements UserInterface
     public function setLane(?Lane $lane): self
     {
         $this->lane = $lane;
+
+        return $this;
+    }
+
+    public function getPool(): ?Pool
+    {
+        return $this->pool;
+    }
+
+    public function setPool(Pool $pool): self
+    {
+        // set the owning side of the relation if necessary
+        if ($pool->getUser() !== $this) {
+            $pool->setUser($this);
+        }
+
+        $this->pool = $pool;
+
+        return $this;
+    }
+
+    public function getRiotPuuid(): ?string
+    {
+        return $this->riotPuuid;
+    }
+
+    public function setRiotPuuid(?string $riotPuuid): self
+    {
+        $this->riotPuuid = $riotPuuid;
+
+        return $this;
+    }
+
+    public function getRiotAccountId(): ?string
+    {
+        return $this->riotAccountId;
+    }
+
+    public function setRiotAccountId(?string $riotAccountId): self
+    {
+        $this->riotAccountId = $riotAccountId;
 
         return $this;
     }
@@ -247,34 +293,5 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    public function getPool(): ?Pool
-    {
-        return $this->pool;
-    }
-
-    public function setPool(Pool $pool): self
-    {
-        // set the owning side of the relation if necessary
-        if ($pool->getUser() !== $this) {
-            $pool->setUser($this);
-        }
-
-        $this->pool = $pool;
-
-        return $this;
-    }
-
-    public function getPuuid(): ?string
-    {
-        return $this->puuid;
-    }
-
-    public function setPuuid(?string $puuid): self
-    {
-        $this->puuid = $puuid;
-
-        return $this;
     }
 }
