@@ -1,0 +1,3 @@
+[submodule "public/riot/lol"]
+	path = public/riot/lol
+	url = https://github.com/InFinity54/LoL_DDragon
