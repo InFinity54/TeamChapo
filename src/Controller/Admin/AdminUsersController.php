@@ -311,6 +311,7 @@ class AdminUsersController extends AbstractController
 
     /**
      * @Route("/admin/users/{id}/riot-ids", name="admin_user_riotids")
+     * @throws Exception
      */
     public function adminUserRiotIDs(int $id, RiotApiCaller $riotApi)
     {
@@ -328,7 +329,7 @@ class AdminUsersController extends AbstractController
         $user = $manager->getRepository(User::class)->find($id);
 
         if ($user) {
-            $summonerData = $riotApi->getSummonerByName($user->getNickname(), "EUW");
+            $summonerData = $riotApi->getSummonerByName("EUW", $user->getNickname());
 
             $user->setRiotAccountId($summonerData["accountId"]);
             $user->setRiotPuuid($summonerData["puuid"]);

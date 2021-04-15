@@ -49,25 +49,32 @@
     </li>
 
     {% if app.user is not null and "ROLE_ADMIN" in app.user.roles %}
-    <hr class="sidebar-divider">
+        <hr class="sidebar-divider">
 
-    <div class="sidebar-heading">
-        Administration
-    </div>
+        <div class="sidebar-heading">
+            Administration
+        </div>
 
-    <li class="nav-item {% if app.request.get('_route') == 'admin_champions_refresh' %}active{% endif %}">
-        <a class="nav-link" href="{{ path("admin_champions_refresh") }}">
-            <i class="fas fa-sync-alt"></i>
-            <span>Actualiser la liste des champions</span>
-        </a>
-    </li>
+        <li class="nav-item {% if app.request.get('_route') == 'admin_champions_refresh' %}active{% endif %}">
+            <a class="nav-link" href="{{ path("admin_champions_refresh") }}">
+                <i class="fas fa-sync-alt"></i>
+                <span>Actualiser la liste des champions</span>
+            </a>
+        </li>
 
-    <li class="nav-item {% if app.request.pathinfo starts with '/admin/users' %}active{% endif %}">
-        <a class="nav-link" href="{{ path("admin_users") }}">
-            <i class="fas fa-users"></i>
-            <span>Liste des utilisateurs</span>
-        </a>
-    </li>
+        <li class="nav-item {% if app.request.get('_route') == 'admin_games_refresh' %}active{% endif %}">
+            <a class="nav-link" href="{{ path("admin_games_refresh") }}">
+                <i class="fas fa-sync-alt"></i>
+                <span>Actualiser l'historique des parties</span>
+            </a>
+        </li>
+
+        <li class="nav-item {% if app.request.pathinfo starts with '/admin/users' %}active{% endif %}">
+            <a class="nav-link" href="{{ path("admin_users") }}">
+                <i class="fas fa-users"></i>
+                <span>Liste des utilisateurs</span>
+            </a>
+        </li>
     {% endif %}
 
     <hr class="sidebar-divider d-none d-md-block">

@@ -1,0 +1,9 @@
+#gamesRefreshProgressLog {
+    height: 300px;
+    overflow-y: scroll;
+}
+
+#gamesRefreshProgressLog p {
+    padding: 0;
+    margin: 0;
+}

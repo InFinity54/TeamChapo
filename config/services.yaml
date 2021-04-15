@@ -33,3 +33,6 @@ services:
     App\Services\AvatarUpload:
         arguments:
             $targetDirectory: '%avatars_dir%'
+    App\Services\RiotDataDragonQuery:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
