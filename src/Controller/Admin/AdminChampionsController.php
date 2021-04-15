@@ -36,7 +36,7 @@ class AdminChampionsController extends AbstractController
 
                 $champion->setName($championData["name"]);
                 $champion->setNormalizedName($championData["id"]);
-                $champion->setImage(strtolower($championData["id"]) . ".jpg");
+                $champion->setImage(strtolower($championData["id"]) . "_0.jpg");
 
                 $manager->persist($champion);
             }

@@ -1,0 +1,16 @@
+.gameVersus {
+    font-size: 35px;
+    color: black;
+}
+
+.teamName {
+    font-size: 20px;
+}
+
+.teamWin {
+    color: gold;
+}
+
+.teamPlayer {
+    width: 20%;
+}
