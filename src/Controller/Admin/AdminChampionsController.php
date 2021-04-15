@@ -25,7 +25,7 @@ class AdminChampionsController extends AbstractController
 
         try {
             $manager = $this->getDoctrine()->getManager();
-            $championsData = json_decode(file_get_contents("https://leaguestats.infinity54.fr/riot/lol/latest/data/fr_FR/champion.json"), true)["data"];
+            $championsData = json_decode(file_get_contents($this->getParameter("kernel.project_dir") . "/public/riot/lol/latest/data/fr_FR/champion.json"), true)["data"];
 
             foreach ($championsData as $championData) {
                 $champion = $manager->getRepository(Champion::class)->findOneBy(["name" => $championData["name"]]);

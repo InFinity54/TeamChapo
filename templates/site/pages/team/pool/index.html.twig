@@ -36,27 +36,27 @@
                         {% for user in users %}
                             <tr class="text-center">
                                 <td class="align-middle">
-                                    <img class="" src="{{ asset("riot/lol/lanes/" ~ user.lane.image) }}" alt="{{ user.lane.name }}" title="{{ user.lane.name }}" width="30" height="auto" /> {{ user.nickname }}
+                                    <img class="" src="{{ asset("riot/lol/img/lanes/" ~ user.lane.image) }}" alt="{{ user.lane.name }}" title="{{ user.lane.name }}" width="30" height="auto" /> {{ user.nickname }}
                                 </td>
                                 {% if user.pool is not null %}
                                         <td class="align-middle">
                                             <div class="d-flex flex-wrap justify-content-center align-items-center">
                                                 {% for champion in user.pool.primaryPool %}
-                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
+                                                    <img class="m-2" src="{{ asset("riot/lol/img/champion/tiles/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                                 {% endfor %}
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex flex-wrap justify-content-center align-items-center">
                                                 {% for champion in user.pool.secondaryPool %}
-                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
+                                                    <img class="m-2" src="{{ asset("riot/lol/img/champion/tiles/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                                 {% endfor %}
                                             </div>
                                         </td>
                                         <td class="align-middle">
                                             <div class="d-flex flex-wrap justify-content-center align-items-center">
                                                 {% for champion in user.pool.excludedPool %}
-                                                    <img class="m-2" src="{{ asset("riot/lol/champions/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
+                                                    <img class="m-2" src="{{ asset("riot/lol/img/champion/tiles/" ~ champion.image) }}" alt="{{ champion.name }}" title="{{ champion.name }}" width="75" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                                 {% endfor %}
                                             </div>
                                         </td>
