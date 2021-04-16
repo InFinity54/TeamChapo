@@ -25,7 +25,7 @@
                         {% for game in games %}
                             <div class="row">
                                 <div class="col-sm-12 col-lg-6 text-sm-center text-lg-left">
-                                    <i class="fas fa-calendar-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Date et heure de début de la partie"></i> {{ game.infos.startDate|date("d/m/Y") }} à {{ game.infos.startDate|date("H:i") }} | <i class="fas fa-clock" data-bs-toggle="tooltip" data-bs-placement="top" title="Durée totale de la partie"></i> {{ game.infos.duration }}
+                                    <i class="fas fa-id-card" data-bs-toggle="tooltip" data-bs-placement="top" title="Identifiant de la partie"></i> {{ game.infos.riotId}} | <i class="fas fa-calendar-alt" data-bs-toggle="tooltip" data-bs-placement="top" title="Date et heure de début de la partie"></i> {{ game.infos.startDate|date("d/m/Y") }} à {{ game.infos.startDate|date("H:i") }} | <i class="fas fa-clock" data-bs-toggle="tooltip" data-bs-placement="top" title="Durée totale de la partie"></i> {{ game.infos.duration }}
                                 </div>
 
                                 <div class="col-sm-12 col-lg-6 text-sm-center text-lg-right">
@@ -42,7 +42,7 @@
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-lg-5">
                                     <p class="teamName text-primary text-center font-weight-bold">
-                                        {% if game.teams.100.infos.win %}<span class="teamWin"><i class="fas fa-trophy"></i></span>{% endif %}
+                                        {% if game.teams.100.infos.win %}<span class="teamWin"><i class="fas fa-trophy" data-bs-toggle="tooltip" data-bs-placement="top" title="Victoire"></i></span>{% endif %}
                                         {% if game.teams.100.isTeamChapo %}TEAM CHAPO{% else %}ÉQUIPE BLEUE{% endif %}
                                     </p>
                                     <table class="w-100">
@@ -56,6 +56,17 @@
                                                     </td>
                                                 {% endif %}
                                             {% endfor %}
+                                            {% if game.teams.100.players[5]|length > 0 %}
+                                                {% for player in game.teams.100.players[5] %}
+                                                    {% if player is not null %}
+                                                        <td class="text-center teamPlayer">
+                                                            <img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" class="mb-1" width="100%" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" />
+                                                            <br />
+                                                            <img src="{{ asset("riot/lol/latest/img/summonerspells/" ~ player.summonerSpell1Id ~ ".png") }}" alt="" width="40%" height="auto" /> <img src="{{ asset("riot/lol/latest/img/summonerspells/" ~ player.summonerSpell2Id ~ ".png") }}" alt="" width="40%" height="auto" />
+                                                        </td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
                                         </tr>
                                     </table>
                                 </div>
@@ -70,7 +81,7 @@
                                 </div>
                                 <div class="col-sm-12 col-lg-5">
                                     <p class="teamName text-danger text-center font-weight-bold">
-                                        {% if game.teams.200.infos.win %}<span class="teamWin"><i class="fas fa-trophy"></i></span>{% endif %}
+                                        {% if game.teams.200.infos.win %}<span class="teamWin"><i class="fas fa-trophy" data-bs-toggle="tooltip" data-bs-placement="top" title="Victoire"></i></span>{% endif %}
                                         {% if game.teams.200.isTeamChapo %}TEAM CHAPO{% else %}ÉQUIPE ROUGE{% endif %}
                                     </p>
                                     <table class="w-100">
@@ -84,6 +95,17 @@
                                                     </td>
                                                 {% endif %}
                                             {% endfor %}
+                                            {% if game.teams.200.players[5]|length > 0 %}
+                                                {% for player in game.teams.200.players[5] %}
+                                                    {% if player is not null %}
+                                                        <td class="text-center teamPlayer">
+                                                            <img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" class="mb-1" width="100%" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" />
+                                                            <br />
+                                                            <img src="{{ asset("riot/lol/latest/img/summonerspells/" ~ player.summonerSpell1Id ~ ".png") }}" alt="" width="40%" height="auto" /> <img src="{{ asset("riot/lol/latest/img/summonerspells/" ~ player.summonerSpell2Id ~ ".png") }}" alt="" width="40%" height="auto" />
+                                                        </td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
                                         </tr>
                                     </table>
                                 </div>

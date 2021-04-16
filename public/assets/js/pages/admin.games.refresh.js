@@ -6,6 +6,7 @@ let riotAccountId = "";
 let riotId = "";
 let riotPuuid = "";
 let gamesToRetrieve = [];
+let gamesToSkip = [];
 
 function changeProgressValue(newValue) {
     progressBar.attr("aria-valuenow", newValue);
@@ -43,12 +44,16 @@ function retrieveRiotIds() {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération des identifiants Riot Games.</p>`);
+                progressBar.removeClass("progress-bar-striped");
+                progressBar.removeClass("progress-bar-animated");
                 changeProgressValue(100);
                 console.error(errorThrown);
             }
         });
     } catch (error) {
         appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération des identifiants Riot Games.</p>`);
+        progressBar.removeClass("progress-bar-striped");
+        progressBar.removeClass("progress-bar-animated");
         changeProgressValue(100);
         console.error(error);
     }
@@ -81,12 +86,16 @@ function retrieveGamesList(start = 0, recursive = false) {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 appendToProgressLog(`<p class="text-danger">Erreur lors du calcul du nombre de parties disponibles.</p>`);
+                progressBar.removeClass("progress-bar-striped");
+                progressBar.removeClass("progress-bar-animated");
                 changeProgressValue(100);
                 console.error(errorThrown);
             }
         });
     } catch (error) {
         appendToProgressLog(`<p class="text-danger">Erreur lors du calcul du nombre de parties disponibles.</p>`);
+        progressBar.removeClass("progress-bar-striped");
+        progressBar.removeClass("progress-bar-animated");
         changeProgressValue(100);
         console.error(error);
     }
@@ -127,7 +136,8 @@ function retrieveGames(i = 0) {
                                         success: function (dataSave) {
                                             if (dataSave.code === 200) {
                                                 appendToProgressLog(`<p class="text-success">Partie ` + gamesToRetrieve[i] + ` enregistrée en base de données.</p>`);
-                                                changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3 * 2)));
+                                                changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3)));
+                                                addedGames++;
                                                 retrieveGames(i + 1);
                                             } else {
                                                 appendToProgressLog(`<p class="text-danger">Erreur pendant l'enregistrement de la partie ` + gamesToRetrieve[i] + ` en base de données.</p>`);
@@ -145,6 +155,8 @@ function retrieveGames(i = 0) {
                                                 }, 60000);
                                             } else {
                                                 appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération de la partie ` + gamesToRetrieve[i] + `.</p>`);
+                                                progressBar.removeClass("progress-bar-striped");
+                                                progressBar.removeClass("progress-bar-animated");
                                                 changeProgressValue(100);
                                                 console.error(errorThrown);
                                             }
@@ -152,7 +164,8 @@ function retrieveGames(i = 0) {
                                     });
                                 } else {
                                     appendToProgressLog(`<p class="text-warning">Partie ` + gamesToRetrieve[i] + ` passée : un ou plusieurs joueurs de l'équipe sont absents.</p>`);
-                                    changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3 * 2)));
+                                    gamesToSkip.push(gamesToRetrieve[i]);
+                                    changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3)));
                                     retrieveGames(i + 1);
                                 }
                             },
@@ -171,6 +184,8 @@ function retrieveGames(i = 0) {
                                     }, 60000);
                                 } else {
                                     appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération de la partie ` + gamesToRetrieve[i] + `.</p>`);
+                                    progressBar.removeClass("progress-bar-striped");
+                                    progressBar.removeClass("progress-bar-animated");
                                     changeProgressValue(100);
                                     console.error(errorThrown);
                                 }
@@ -178,12 +193,46 @@ function retrieveGames(i = 0) {
                         });
                     } else {
                         appendToProgressLog(`<p class="text-warning">Partie ` + gamesToRetrieve[i] + ` passée : partie déjà sauvegardée dans la base de données.</p>`);
-                        changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3 * 2)));
+                        gamesToSkip.push(gamesToRetrieve[i]);
+                        changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3)));
                         retrieveGames(i + 1);
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération de la partie ` + gamesToRetrieve[i] + `.</p>`);
+                    changeProgressValue(100);
+                    console.error(errorThrown);
+                }
+            });
+        } else {
+            changeProgressValue(66);
+            registerSkippedGames();
+        }
+    } catch (error) {
+        appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération de la partie ` + gamesToRetrieve[i] + `.</p>`);
+        progressBar.removeClass("progress-bar-striped");
+        progressBar.removeClass("progress-bar-animated");
+        changeProgressValue(100);
+        console.error(error);
+    }
+}
+
+function registerSkippedGames(i = 0) {
+    try {
+        if (i < gamesToSkip.length) {
+            appendToProgressLog(`<p>Enregistrement de la partie ` + gamesToSkip[i] + ` pour exclusion des prochaines mises à jour...</p>`);
+
+            $.ajax({
+                url: Routing.generate('api_games_saveexclude', { id: gamesToSkip[i] }),
+                type: "GET",
+                sync: true,
+                dataType: "json",
+                success: function (data) {
+                    changeProgressValue(Math.round(66 + (i / gamesToSkip.length * 100 / 3)));
+                    registerSkippedGames(i + 1);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    appendToProgressLog(`<p class="text-danger">Erreur lors de l'enregistrement de la partie ` + gamesToSkip[i] + ` pour exclusion.</p>`);
                     changeProgressValue(100);
                     console.error(errorThrown);
                 }
@@ -196,7 +245,9 @@ function retrieveGames(i = 0) {
             changeProgressValue(100);
         }
     } catch (error) {
-        appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération de la partie ` + gamesToRetrieve[i] + `.</p>`);
+        appendToProgressLog(`<p class="text-danger">Erreur lors de l'enregistrement de la partie ` + gamesToSkip[i] + ` pour exclusion.</p>`);
+        progressBar.removeClass("progress-bar-striped");
+        progressBar.removeClass("progress-bar-animated");
         changeProgressValue(100);
         console.error(error);
     }

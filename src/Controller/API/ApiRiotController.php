@@ -65,7 +65,7 @@ class ApiRiotController extends AbstractController
         $puuidFromTeam = [];
 
         foreach ($users as $user) {
-            if (in_array($user->getRiotPuuid(), $participants)) {
+            if (in_array($user->getRiotPuuid(), $participants, true)) {
                 $puuidFromTeam[] = $user->getRiotPuuid();
             }
         }

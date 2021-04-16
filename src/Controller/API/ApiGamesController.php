@@ -4,7 +4,9 @@ namespace App\Controller\API;
 use App\Entity\Champion;
 use App\Entity\Game;
 use App\Entity\GameParticipant;
+use App\Entity\GameSkip;
 use App\Entity\GameTeam;
+use App\Entity\User;
 use App\Services\RiotDataDragonQuery;
 use DateTime;
 use Exception;
@@ -23,8 +25,9 @@ class ApiGamesController extends AbstractController
     {
         $manager = $this->getDoctrine()->getManager();
         $game = $manager->getRepository(Game::class)->findOneBy(["riotId" => $id]);
+        $gameSkipped = $manager->getRepository(GameSkip::class)->findOneBy(["riotId" => $id]);
 
-        if ($game) {
+        if ($game || $gameSkipped) {
             $response = [ "isExist" => true ];
         } else {
             $response = [ "isExist" => false ];
@@ -58,6 +61,11 @@ class ApiGamesController extends AbstractController
 
                 $manager->persist($game);
 
+                $teamsLanes = [
+                    100 => [],
+                    200 => []
+                ];
+
                 foreach ($gameData["info"]["participants"] as $participantData) {
                     $participant = new GameParticipant();
                     $perks = [
@@ -87,14 +95,12 @@ class ApiGamesController extends AbstractController
                         }
                     }
 
-                    if ($participantData["lane"] === "BOTTOM") {
-                        if ($participantData["role"] === "SUPPORT") {
-                            $lane = "SUPPORT";
-                        } else {
-                            $lane = "ADC";
-                        }
+                    $lane = $this->determinedPlayerLane($teamsLanes, $participantData);
+
+                    if (!in_array($lane, $teamsLanes[$participantData["teamId"]], true)) {
+                        $teamsLanes[$participantData["teamId"]][] = $lane;
                     } else {
-                        $lane = $participantData["lane"];
+                        $lane = "NONE";
                     }
 
                     $participant->setAssists($participantData["assists"]);
@@ -239,5 +245,71 @@ class ApiGamesController extends AbstractController
         }
 
         throw new Exception("Les données de la partie sont introuvables.", 500);
+    }
+
+    private function determinedPlayerLane(array $teamsLanes, array $participant): string
+    {
+        if ($participant["lane"] !== "NONE") {
+            $manager = $this->getDoctrine()->getManager();
+            $user = $manager->getRepository(User::class)->findOneBy(["riotPuuid" => $participant["puuid"]]);
+
+            if ($user && $user->getLane()) {
+                if ($participant["lane"] === "TOP" && $user->getLane()->getName() === "Top") {
+                    return "TOP";
+                }
+
+                if ($participant["lane"] === "JUNGLE" && $user->getLane()->getName() === "Jungle") {
+                    return "JUNGLE";
+                }
+
+                if ($participant["lane"] === "MIDDLE" && $user->getLane()->getName() === "Mid") {
+                    return "MIDDLE";
+                }
+
+                if ($participant["lane"] === "BOTTOM") {
+                    if ($participant["role"] === "SUPPORT" && $user->getLane()->getName() === "Support") {
+                        return "SUPPORT";
+                    }
+
+                    if ($participant["role"] === "CARRY" && $user->getLane()->getName() === "ADC") {
+                        return "ADC";
+                    }
+                }
+            } else {
+                if ($participant["lane"] === "BOTTOM") {
+                    if ($participant["role"] === "SUPPORT") {
+                        return "SUPPORT";
+                    }
+
+                    return "ADC";
+                }
+
+                return $participant["lane"];
+            }
+        }
+
+        return "NONE";
+    }
+
+
+    /**
+     * @Route("/api/games/{id}/exclude", name="api_games_saveexclude", options={"expose"=true})
+     * @throws Exception
+     */
+    public function saveGameInExclusion(string $id, Request $request, RiotDataDragonQuery $riotDataDragon): JsonResponse
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $gameExcluded = $manager->getRepository(GameSkip::class)->findOneBy(["riotId" => $id]);
+
+        if (!$gameExcluded) {
+            $gameExcluded = new GameSkip();
+        }
+
+        $gameExcluded->setRiotId($id);
+
+        $manager->persist($gameExcluded);
+        $manager->flush();
+
+        return new JsonResponse(["code" => 200]);
     }
 }
