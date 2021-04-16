@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TeamPoolController extends AbstractController
 {
     /**
-     * @Route("/team/pool", name="team_pool")
+     * @Route("/team/pools", name="team_pool")
      */
     public function teamPool()
     {
@@ -24,7 +24,7 @@ class TeamPoolController extends AbstractController
     }
 
     /**
-     * @Route("/team/pool/edit", name="team_pool_edit")
+     * @Route("/team/pools/edit", name="team_pool_edit")
      */
     public function profile(Request $request)
     {
