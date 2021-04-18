@@ -1,0 +1,26 @@
+.tab-pane {
+     border-left: 1px solid #dddfeb;
+     border-right: 1px solid #dddfeb;
+     border-bottom: 1px solid #dddfeb;
+     border-radius: 0 0 20px 20px;
+}
+
+.teamLine {
+     padding: 10px 10px 15px 10px;
+}
+
+.teamName {
+     font-size: 20px;
+}
+
+.teamName .victory {
+     color: gold;
+}
+
+.teamBorderRight {
+     border-right: 1px solid #dddfeb;
+}
+
+.teamBorderBottom {
+     border-bottom: 1px solid #dddfeb;
+}

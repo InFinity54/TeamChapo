@@ -1,0 +1,27 @@
+<tr>
+    <td class="font-weight-bold">Monstres tués</td>
+    {% for i in 0..4 %}
+        {% if game.teams.100.players[i] is not null %}
+            <td class="text-center">{{ game.teams.100.players[i].neutralMinionsKilled|number_format(0, ",", " ") }}</td>
+        {% endif %}
+    {% endfor %}
+    {% if game.teams.100.players[5]|length > 0 %}
+        {% for player in game.teams.100.players[5] %}
+            {% if player is not null %}
+                <td class="text-center">{{ player.neutralMinionsKilled|number_format(0, ",", " ") }}</td>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% for i in 0..4 %}
+        {% if game.teams.200.players[i] is not null %}
+            <td class="text-center">{{ game.teams.200.players[i].neutralMinionsKilled|number_format(0, ",", " ") }}</td>
+        {% endif %}
+    {% endfor %}
+    {% if game.teams.200.players[5]|length > 0 %}
+        {% for player in game.teams.200.players[5] %}
+            {% if player is not null %}
+                <td class="text-center">{{ player.neutralMinionsKilled|number_format(0, ",", " ") }}</td>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</tr>

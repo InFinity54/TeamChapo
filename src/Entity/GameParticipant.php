@@ -79,11 +79,6 @@ class GameParticipant
     private $ward;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lane;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Champion::class)
      * @ORM\JoinColumn(nullable=false)
      */
@@ -183,6 +178,11 @@ class GameParticipant
      * @ORM\Column(type="integer")
      */
     private $killingSprees;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lane::class)
+     */
+    private $lane;
 
     /**
      * @ORM\Column(type="integer")
@@ -338,6 +338,11 @@ class GameParticipant
      * @ORM\Column(type="integer")
      */
     private $spellRCasts;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $summonerName;
 
     /**
      * @ORM\Column(type="integer")
@@ -618,18 +623,6 @@ class GameParticipant
         return $this;
     }
 
-    public function getLane(): ?string
-    {
-        return $this->lane;
-    }
-
-    public function setLane(string $lane): self
-    {
-        $this->lane = $lane;
-
-        return $this;
-    }
-
     public function getChampion(): ?Champion
     {
         return $this->champion;
@@ -866,6 +859,18 @@ class GameParticipant
     public function setKillingSprees(int $killingSprees): self
     {
         $this->killingSprees = $killingSprees;
+
+        return $this;
+    }
+
+    public function getLane(): ?Lane
+    {
+        return $this->lane;
+    }
+
+    public function setLane(?Lane $lane): self
+    {
+        $this->lane = $lane;
 
         return $this;
     }
@@ -1238,6 +1243,18 @@ class GameParticipant
     public function setSpellRCasts(int $spellRCasts): self
     {
         $this->spellRCasts = $spellRCasts;
+
+        return $this;
+    }
+
+    public function getSummonerName(): ?string
+    {
+        return $this->summonerName;
+    }
+
+    public function setSummonerName(string $summonerName): self
+    {
+        $this->summonerName = $summonerName;
 
         return $this;
     }

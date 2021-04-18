@@ -1,0 +1,24 @@
+#compo table {
+    margin: 0;
+}
+
+#compo .championBanned {
+    filter: grayscale(100%);
+    border-radius: 50px;
+}
+
+#compo .itemList {
+    width: 140px;
+}
+
+#compo .itemList img {
+    width: 38px;
+    height: auto;
+    margin: 2px;
+}
+
+@media only screen and (max-width: 1200px) {
+    #compo .redTeam {
+        direction: rtl;
+    }
+}

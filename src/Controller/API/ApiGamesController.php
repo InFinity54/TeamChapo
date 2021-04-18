@@ -6,6 +6,7 @@ use App\Entity\Game;
 use App\Entity\GameParticipant;
 use App\Entity\GameSkip;
 use App\Entity\GameTeam;
+use App\Entity\Lane;
 use App\Entity\User;
 use App\Services\RiotDataDragonQuery;
 use DateTime;
@@ -97,12 +98,6 @@ class ApiGamesController extends AbstractController
 
                     $lane = $this->determinedPlayerLane($teamsLanes, $participantData);
 
-                    if (!in_array($lane, $teamsLanes[$participantData["teamId"]], true)) {
-                        $teamsLanes[$participantData["teamId"]][] = $lane;
-                    } else {
-                        $lane = "NONE";
-                    }
-
                     $participant->setAssists($participantData["assists"]);
                     $participant->setBaronKills($participantData["baronKills"]);
                     $participant->setChampion($manager->getRepository(Champion::class)->findOneBy(["normalizedName" => $participantData["championName"]]));
@@ -166,6 +161,7 @@ class ApiGamesController extends AbstractController
                     $participant->setSpellECasts($participantData["spell3Casts"]);
                     $participant->setSpellRCasts($participantData["spell4Casts"]);
                     $participant->setSpellZCasts($participantData["spell2Casts"]);
+                    $participant->setSummonerName($participantData["summonerName"]);
                     $participant->setSummonerSpell1Casts($participantData["summoner1Casts"]);
                     $participant->setSummonerSpell1Id($participantData["spell1Id"]);
                     $participant->setSummonerSpell2Casts($participantData["summoner2Casts"]);
@@ -247,48 +243,70 @@ class ApiGamesController extends AbstractController
         throw new Exception("Les données de la partie sont introuvables.", 500);
     }
 
-    private function determinedPlayerLane(array $teamsLanes, array $participant): string
+    private function determinedPlayerLane(array &$teamsLanes, array $participant): ?Lane
     {
         if ($participant["lane"] !== "NONE") {
             $manager = $this->getDoctrine()->getManager();
             $user = $manager->getRepository(User::class)->findOneBy(["riotPuuid" => $participant["puuid"]]);
 
             if ($user && $user->getLane()) {
-                if ($participant["lane"] === "TOP" && $user->getLane()->getName() === "Top") {
-                    return "TOP";
+                if ($participant["lane"] === "TOP" && !in_array("TOP", $teamsLanes[$participant["teamId"]], true) && $user->getLane()->getName() === "Top") {
+                    $teamsLanes[$participant["teamId"]][] = "TOP";
+                    return $manager->getRepository(Lane::class)->findOneBy(["name" => "Top"]);
                 }
 
-                if ($participant["lane"] === "JUNGLE" && $user->getLane()->getName() === "Jungle") {
-                    return "JUNGLE";
+                if ($participant["lane"] === "JUNGLE" && !in_array("JUNGLE", $teamsLanes[$participant["teamId"]], true) && $user->getLane()->getName() === "Jungle") {
+                    $teamsLanes[$participant["teamId"]][] = "JUNGLE";
+                    return $manager->getRepository(Lane::class)->findOneBy(["name" => "Jungle"]);
                 }
 
-                if ($participant["lane"] === "MIDDLE" && $user->getLane()->getName() === "Mid") {
-                    return "MIDDLE";
+                if ($participant["lane"] === "MIDDLE" && !in_array("MIDDLE", $teamsLanes[$participant["teamId"]], true) && $user->getLane()->getName() === "Mid") {
+                    $teamsLanes[$participant["teamId"]][] = "MIDDLE";
+                    return $manager->getRepository(Lane::class)->findOneBy(["name" => "Mid"]);
                 }
 
                 if ($participant["lane"] === "BOTTOM") {
-                    if ($participant["role"] === "SUPPORT" && $user->getLane()->getName() === "Support") {
-                        return "SUPPORT";
+                    if ($participant["role"] === "SUPPORT" && !in_array("SUPPORT", $teamsLanes[$participant["teamId"]], true) && $user->getLane()->getName() === "Support") {
+                        $teamsLanes[$participant["teamId"]][] = "SUPPORT";
+                        return $manager->getRepository(Lane::class)->findOneBy(["name" => "Support"]);
                     }
 
-                    if ($participant["role"] === "CARRY" && $user->getLane()->getName() === "ADC") {
-                        return "ADC";
+                    if ($participant["role"] === "CARRY" && !in_array("ADC", $teamsLanes[$participant["teamId"]], true) && $user->getLane()->getName() === "ADC") {
+                        $teamsLanes[$participant["teamId"]][] = "ADC";
+                        return $manager->getRepository(Lane::class)->findOneBy(["name" => "ADC"]);
                     }
                 }
             } else {
                 if ($participant["lane"] === "BOTTOM") {
-                    if ($participant["role"] === "SUPPORT") {
-                        return "SUPPORT";
+                    if ($participant["role"] === "SUPPORT" && !in_array("SUPPORT", $teamsLanes[$participant["teamId"]], true)) {
+                        $teamsLanes[$participant["teamId"]][] = "SUPPORT";
+                        return $manager->getRepository(Lane::class)->findOneBy(["name" => "Support"]);
                     }
 
-                    return "ADC";
+                    if ($participant["role"] === "CARRY" && !in_array("ADC", $teamsLanes[$participant["teamId"]], true)) {
+                        $teamsLanes[$participant["teamId"]][] = "ADC";
+                        return $manager->getRepository(Lane::class)->findOneBy(["name" => "ADC"]);
+                    }
                 }
 
-                return $participant["lane"];
+                if ($participant["lane"] === "TOP" && !in_array("TOP", $teamsLanes[$participant["teamId"]], true)) {
+                    $teamsLanes[$participant["teamId"]][] = "TOP";
+                    return $manager->getRepository(Lane::class)->findOneBy(["name" => "Top"]);
+                }
+
+                if ($participant["lane"] === "JUNGLE" && !in_array("JUNGLE", $teamsLanes[$participant["teamId"]], true)) {
+                    $teamsLanes[$participant["teamId"]][] = "JUNGLE";
+                    return $manager->getRepository(Lane::class)->findOneBy(["name" => "Jungle"]);
+                }
+
+                if ($participant["lane"] === "MIDDLE" && !in_array("MIDDLE", $teamsLanes[$participant["teamId"]], true)) {
+                    $teamsLanes[$participant["teamId"]][] = "MIDDLE";
+                    return $manager->getRepository(Lane::class)->findOneBy(["name" => "Mid"]);
+                }
             }
         }
 
-        return "NONE";
+        return null;
     }
 
 

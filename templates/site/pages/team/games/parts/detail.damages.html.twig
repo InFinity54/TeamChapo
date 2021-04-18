@@ -1,0 +1,78 @@
+<div class="tab-pane fade overflow-y-hidden" id="damages" role="tabpanel" aria-labelledby="damages-tab">
+    <table class="table table-striped w-100">
+        <thead>
+            <th></th>
+            {% for i in 0..4 %}
+                {% if game.teams.100.players[i] is not null %}
+                    <th class="text-center p-0"><div class="blueTeamDamages"></div><span class="teamSummonerDamages">{% if game.teams.100.players[i].lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ game.teams.100.players[i].lane.image) }}" alt="{{ game.teams.100.players[i].lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.players[i].lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.players[i].champion.image) }}" alt="{{ game.teams.100.players[i].champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.players[i].champion.name }}" /><br/>{{ game.teams.100.players[i].summonerName }}</span></th>
+                {% endif %}
+            {% endfor %}
+            {% if game.teams.100.players[5]|length > 0 %}
+                {% for player in game.teams.100.players[5] %}
+                    {% if player is not null %}
+                        <th class="text-center p-0"><div class="blueTeamDamages"></div><span class="teamSummonerDamages">{% if player.lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ player.lane.image) }}" alt="{{ player.lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" /><br />{{ player.summonerName }}</span></th>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% for i in 0..4 %}
+                {% if game.teams.200.players[i] is not null %}
+                    <th class="text-center p-0"><div class="redTeamDamages"></div><span class="teamSummonerDamages">{% if game.teams.200.players[i].lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ game.teams.200.players[i].lane.image) }}" alt="{{ game.teams.200.players[i].lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.players[i].lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.players[i].champion.image) }}" alt="{{ game.teams.200.players[i].champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.players[i].champion.name }}" /><br />{{ game.teams.200.players[i].summonerName }}</span></th>
+                {% endif %}
+            {% endfor %}
+            {% if game.teams.200.players[5]|length > 0 %}
+                {% for player in game.teams.200.players[5] %}
+                    {% if player is not null %}
+                        <th class="text-center p-0"><div class="redTeamDamages"></div><span class="teamSummonerDamages">{% if player.lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ player.lane.image) }}" alt="{{ player.lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" /><br />{{ player.summonerName }}</span></th>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </thead>
+        <tbody>
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalall.global.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalphys.global.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalmagic.global.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totaltrue.global.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalall.tochamp.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalphys.tochamp.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalmagic.tochamp.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totaltrue.tochamp.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalall.tobuildings.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalall.toobjectives.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalall.toturrets.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.largestcrit.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalheal.player.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalheal.team.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totaltaken.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalphystaken.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totalmagictaken.html.twig" %}
+            {% include "site/pages/team/games/parts/subparts/damages/detail.damages.totaltruetaken.html.twig" %}
+        </tbody>
+        <tfoot>
+            <th></th>
+            {% for i in 0..4 %}
+                {% if game.teams.100.players[i] is not null %}
+                    <th class="text-center p-0"><span class="teamSummonerDamages">{% if game.teams.100.players[i].lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ game.teams.100.players[i].lane.image) }}" alt="{{ game.teams.100.players[i].lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.players[i].lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.players[i].champion.image) }}" alt="{{ game.teams.100.players[i].champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.players[i].champion.name }}" /><br/>{{ game.teams.100.players[i].summonerName }}</span><div class="blueTeamDamages"></div></th>
+                {% endif %}
+            {% endfor %}
+            {% if game.teams.100.players[5]|length > 0 %}
+                {% for player in game.teams.100.players[5] %}
+                    {% if player is not null %}
+                        <th class="text-center p-0"><span class="teamSummonerDamages">{% if player.lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ player.lane.image) }}" alt="{{ player.lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" /><br />{{ player.summonerName }}</span><div class="blueTeamDamages"></div></th>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% for i in 0..4 %}
+                {% if game.teams.200.players[i] is not null %}
+                    <th class="text-center p-0"><span class="teamSummonerDamages">{% if game.teams.200.players[i].lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ game.teams.200.players[i].lane.image) }}" alt="{{ game.teams.200.players[i].lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.players[i].lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.players[i].champion.image) }}" alt="{{ game.teams.200.players[i].champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.players[i].champion.name }}" /><br />{{ game.teams.200.players[i].summonerName }}</span><div class="redTeamDamages"></div></th>
+                {% endif %}
+            {% endfor %}
+            {% if game.teams.200.players[5]|length > 0 %}
+                {% for player in game.teams.200.players[5] %}
+                    {% if player is not null %}
+                        <th class="text-center p-0"><span class="teamSummonerDamages">{% if player.lane is not null %}<img src="{{ asset("riot/lol/img/lanes/" ~ player.lane.image) }}" alt="{{ player.lane.name }}" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.lane.name }}" />{% else %}<img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="20px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />{% endif %}<br /><img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" width="60px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" /><br />{{ player.summonerName }}</span><div class="redTeamDamages"></div></th>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </tfoot>
+    </table>
+</div>

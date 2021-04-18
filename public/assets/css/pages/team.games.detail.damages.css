@@ -1,0 +1,41 @@
+#damages {
+    overflow-x: scroll;
+}
+
+#damages table {
+    margin: 0;
+}
+
+@media only screen and (min-width: 1420px) {
+    #damages {
+        overflow-x: hidden;
+    }
+}
+
+#damages table thead th {
+    vertical-align: top;
+}
+
+#damages table tfoot th {
+    vertical-align: bottom;
+}
+
+#damages .blueTeamDamages, #damages .redTeamDamages {
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+
+#damages .blueTeamDamages {
+    background-color: #4e73df;
+}
+
+#damages .redTeamDamages {
+    background-color: #e74a3b;
+}
+
+#damages .teamSummonerDamages {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}

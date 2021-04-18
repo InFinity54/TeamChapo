@@ -1,0 +1,17 @@
+<tr>
+    <td class="font-weight-bold">Premier inhibiteur</td>
+    <td class="text-center" colspan="5">
+        {% if game.teams.100.infos.firstInhibitor %}
+            <i class="fas fa-check text-success"></i>
+        {% else %}
+            <i class="fas fa-times text-danger"></i>
+        {% endif %}
+    </td>
+    <td class="text-center" colspan="5">
+        {% if game.teams.200.infos.firstInhibitor %}
+            <i class="fas fa-check text-success"></i>
+        {% else %}
+            <i class="fas fa-times text-danger"></i>
+        {% endif %}
+    </td>
+</tr>

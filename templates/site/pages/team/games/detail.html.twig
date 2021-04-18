@@ -1,0 +1,65 @@
+{% extends "site/base.html.twig" %}
+
+{% block title %}Équipe > Historique de parties > Détail d'une partie{% endblock %}
+
+{% block css %}
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/pages/team.games.detail.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/pages/team.games.detail.compo.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/pages/team.games.detail.damages.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/pages/team.games.detail.vision.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/pages/team.games.detail.revenus.css") }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset("assets/css/pages/team.games.detail.stats.css") }}" />
+{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{ asset("assets/js/tooltips.js") }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Détail d'une partie de l'équipe</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Détail de la partie {{ game.infos.riotId }}</h6>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-primary shadow-sm dropdown-toggle" type="button" id="gameDetailOnAnotherWebsite" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-eye fa-sm"></i> Voir sur un autre site</button>
+                        <div class="dropdown-menu" aria-labelledby="gameDetailOnAnotherWebsite">
+                            <a class="dropdown-item" href="https://matchhistory.euw.leagueoflegends.com/fr/#match-details/EUW1/{{ game.simplifiedRiotId }}" target="_blank">Historique des parties officiel</a>
+                            <a class="dropdown-item" href="https://www.leagueofgraphs.com/fr/match/euw/{{ game.simplifiedRiotId }}" target="_blank">LeagueOfGraphs</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs nav-fill" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="compo-tab" data-toggle="tab" href="#compo" role="tab" aria-controls="compo" aria-selected="true">Composition</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="damages-tab" data-toggle="tab" href="#damages" role="tab" aria-controls="damages" aria-selected="false">Statistiques de dégâts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="vision-tab" data-toggle="tab" href="#vision" role="tab" aria-controls="vision" aria-selected="false">Statistiques de vision</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="revenus-tab" data-toggle="tab" href="#revenus" role="tab" aria-controls="revenus" aria-selected="false">Statistiques de revenus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="stats-tab" data-toggle="tab" href="#stats" role="tab" aria-controls="stats" aria-selected="false">Autres statistiques</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        {% include "site/pages/team/games/parts/detail.compo.html.twig" %}
+                        {% include "site/pages/team/games/parts/detail.damages.html.twig" %}
+                        {% include "site/pages/team/games/parts/detail.vision.html.twig" %}
+                        {% include "site/pages/team/games/parts/detail.revenus.html.twig" %}
+                        {% include "site/pages/team/games/parts/detail.stats.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

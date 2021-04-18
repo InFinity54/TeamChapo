@@ -1,0 +1,51 @@
+<tr>
+    <td class="font-weight-bold">Premier sang</td>
+    {% for i in 0..4 %}
+        {% if game.teams.100.players[i] is not null %}
+            <td class="text-center">
+                {% if game.teams.100.players[i].firstBloodKill %}
+                    <i class="fas fa-check text-success"></i>
+                {% else %}
+                    <i class="fas fa-times text-danger"></i>
+                {% endif %}
+            </td>
+        {% endif %}
+    {% endfor %}
+    {% if game.teams.100.players[5]|length > 0 %}
+        {% for player in game.teams.100.players[5] %}
+            {% if player is not null %}
+                <td class="text-center">
+                    {% if player.firstBloodKill %}
+                        <i class="fas fa-check text-success"></i>
+                    {% else %}
+                        <i class="fas fa-times text-danger"></i>
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% for i in 0..4 %}
+        {% if game.teams.200.players[i] is not null %}
+            <td class="text-center">
+                {% if game.teams.200.players[i].firstBloodKill %}
+                    <i class="fas fa-check text-success"></i>
+                {% else %}
+                    <i class="fas fa-times text-danger"></i>
+                {% endif %}
+            </td>
+        {% endif %}
+    {% endfor %}
+    {% if game.teams.200.players[5]|length > 0 %}
+        {% for player in game.teams.200.players[5] %}
+            {% if player is not null %}
+                <td class="text-center">
+                    {% if player.firstBloodKill %}
+                        <i class="fas fa-check text-success"></i>
+                    {% else %}
+                        <i class="fas fa-times text-danger"></i>
+                    {% endif %}
+                </td>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</tr>

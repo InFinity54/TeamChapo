@@ -1,0 +1,198 @@
+<div class="tab-pane active overflow-hidden" id="compo" role="tabpanel" aria-labelledby="compo-tab">
+    <div class="row">
+        <div class="col-sm-12 col-xl-6">
+            <div class="row bg-primary">
+                <div class="col-sm-12 teamName text-white text-center align-middle">
+                    {% if game.teams.100.infos.win %}<span class="victory mr-1"><i class="fas fa-trophy" data-bs-toggle="tooltip" data-bs-placement="top" title="Victoire"></i></span>{% endif %}
+                    {% if game.teams.100.isTeamChapo %}TEAM CHAPO{% else %}ÉQUIPE BLEUE{% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 teamLine teamBorderRight teamBorderBottom text-center">
+                    BANNISSEMENTS
+                    <br />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.infos.championBan1.image) }}" alt="{{ game.teams.100.infos.championBan1.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.infos.championBan1.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.infos.championBan2.image) }}" alt="{{ game.teams.100.infos.championBan2.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.infos.championBan2.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.infos.championBan3.image) }}" alt="{{ game.teams.100.infos.championBan3.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.infos.championBan3.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.infos.championBan4.image) }}" alt="{{ game.teams.100.infos.championBan4.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.infos.championBan4.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.infos.championBan5.image) }}" alt="{{ game.teams.100.infos.championBan5.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.infos.championBan5.name }}" />
+                </div>
+            </div>
+
+            <table class="w-100">
+                {% for i in 0..4 %}
+                    {% if game.teams.100.players[i] is not null %}
+                        <tr>
+                            <td class="text-center">
+                                {% if game.teams.100.players[i].lane is not null %}
+                                    <img src="{{ asset("riot/lol/img/lanes/" ~ game.teams.100.players[i].lane.image) }}" alt="{{ game.teams.100.players[i].lane.name }}" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.players[i].lane.name }}" />
+                                {% else %}
+                                    <img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.100.players[i].champion.image) }}" alt="{{ game.teams.100.players[i].champion.name }}" width="50px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.100.players[i].champion.name }}" />
+                                <br />
+                                {{ game.teams.100.players[i].summonerName }}
+                            </td>
+                            <td class="text-center itemList">
+                                {% if game.teams.100.players[i].item1 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].item1 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.100.players[i].item2 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].item2 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.100.players[i].item3 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].item3 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.100.players[i].item4 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].item4 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.100.players[i].item5 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].item5 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.100.players[i].item6 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].item6 ~ ".png") }}" alt="" />{% endif %}
+                            </td>
+                            <td class="text-center">
+                                <img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.100.players[i].ward ~ ".png") }}" alt="" width="40px" height="auto" />
+                            </td>
+                            <td class="text-center">
+                                {{ game.teams.100.players[i].kills }} / {{ game.teams.100.players[i].deaths }} / {{ game.teams.100.players[i].assists }}
+                                <br />
+                                {{ game.teams.100.players[i].totalMinionsKilled + game.teams.100.players[i].neutralMinionsKilled }} <img src="{{ asset("riot/lol/img/creep.png") }}" alt="Creep" data-bs-toggle="tooltip" data-bs-placement="top" title="Creeps tués" />
+                                <br />
+                                {{ game.teams.100.players[i].goldEarned|number_format(0, ",", " ") }} <img src="{{ asset("riot/lol/img/gold.png") }}" alt="Gold" data-bs-toggle="tooltip" data-bs-placement="top" title="Golds gagnés" />
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% if game.teams.100.players[5] %}
+                    {% for player in game.teams.100.players[5] %}
+                        {% if player is not null %}
+                            <tr>
+                                <td class="text-center">
+                                    {% if player.lane is not null %}
+                                        <img src="{{ asset("riot/lol/img/lanes/" ~ player.lane.image) }}" alt="{{ player.lane.name }}" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.lane.name }}" />
+                                    {% else %}
+                                        <img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" width="50px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" />
+                                    <br />
+                                    {{ player.summonerName }}
+                                </td>
+                                <td class="text-center itemList">
+                                    {% if player.item1 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item1 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item2 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item2 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item3 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item3 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item4 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item4 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item5 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item5 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item6 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item6 ~ ".png") }}" alt="" />{% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <img src="{{ asset("riot/lol/latest/img/item/" ~ player.ward ~ ".png") }}" alt="" width="40px" height="auto" />
+                                </td>
+                                <td class="text-center">
+                                    {{ player.kills }} / {{ player.deaths }} / {{ player.assists }}
+                                    <br />
+                                    {{ player.totalMinionsKilled + player.neutralMinionsKilled }} <img src="{{ asset("riot/lol/img/creep.png") }}" alt="Creep" data-bs-toggle="tooltip" data-bs-placement="top" title="Creeps tués" />
+                                    <br />
+                                    {{ player.goldEarned|number_format(0, ",", " ") }} <img src="{{ asset("riot/lol/img/gold.png") }}" alt="Gold" data-bs-toggle="tooltip" data-bs-placement="top" title="Golds gagnés" />
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="row bg-danger">
+                <div class="col-sm-12 teamName text-white text-center align-middle">
+                    {% if game.teams.200.infos.win %}<span class="victory mr-1"><i class="fas fa-trophy" data-bs-toggle="tooltip" data-bs-placement="top" title="Victoire"></i></span>{% endif %}
+                    {% if game.teams.200.isTeamChapo %}TEAM CHAPO{% else %}ÉQUIPE BLEUE{% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 teamLine teamBorderRight teamBorderBottom text-center">
+                    BANNISSEMENTS
+                    <br />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.infos.championBan1.image) }}" alt="{{ game.teams.200.infos.championBan1.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.infos.championBan1.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.infos.championBan2.image) }}" alt="{{ game.teams.200.infos.championBan2.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.infos.championBan2.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.infos.championBan3.image) }}" alt="{{ game.teams.200.infos.championBan3.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.infos.championBan3.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.infos.championBan4.image) }}" alt="{{ game.teams.200.infos.championBan4.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.infos.championBan4.name }}" />
+                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.infos.championBan5.image) }}" alt="{{ game.teams.200.infos.championBan5.name }}" width="50px" class="championBanned" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.infos.championBan5.name }}" />
+                </div>
+            </div>
+
+            <table class="w-100 redTeam">
+                {% for i in 0..4 %}
+                    {% if game.teams.200.players[i] is not null %}
+                        <tr>
+                            <td class="text-center">
+                                {{ game.teams.200.players[i].kills }} / {{ game.teams.200.players[i].deaths }} / {{ game.teams.200.players[i].assists }}
+                                <br />
+                                {{ game.teams.200.players[i].totalMinionsKilled + game.teams.200.players[i].neutralMinionsKilled }} <img src="{{ asset("riot/lol/img/creep.png") }}" alt="Creep" data-bs-toggle="tooltip" data-bs-placement="top" title="Creeps tués" />
+                                <br />
+                                {{ game.teams.200.players[i].goldEarned|number_format(0, ",", " ") }} <img src="{{ asset("riot/lol/img/gold.png") }}" alt="Gold" data-bs-toggle="tooltip" data-bs-placement="top" title="Golds gagnés" />
+                            </td>
+                            <td class="text-center">
+                                <img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].ward ~ ".png") }}" alt="" width="40px" height="auto" />
+                            </td>
+                            <td class="text-center itemList">
+                                {% if game.teams.200.players[i].item1 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].item1 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.200.players[i].item2 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].item2 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.200.players[i].item3 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].item3 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.200.players[i].item4 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].item4 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.200.players[i].item5 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].item5 ~ ".png") }}" alt="" />{% endif %}
+                                {% if game.teams.200.players[i].item6 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ game.teams.200.players[i].item6 ~ ".png") }}" alt="" />{% endif %}
+                            </td>
+                            <td class="text-center">
+                                <img src="{{ asset("riot/lol/img/champion/tiles/" ~ game.teams.200.players[i].champion.image) }}" alt="{{ game.teams.200.players[i].champion.name }}" width="50px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.players[i].champion.name }}" />
+                                <br />
+                                {{ game.teams.200.players[i].summonerName }}
+                            </td>
+                            <td class="text-center">
+                                {% if game.teams.200.players[i].lane is not null %}
+                                    <img src="{{ asset("riot/lol/img/lanes/" ~ game.teams.200.players[i].lane.image) }}" alt="{{ game.teams.200.players[i].lane.name }}" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ game.teams.200.players[i].lane.name }}" />
+                                {% else %}
+                                    <img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% if game.teams.200.players[5] %}
+                    {% for player in game.teams.200.players[5] %}
+                        {% if player is not null %}
+                            <tr>
+                                <td class="text-center">
+                                    {{ player.kills }} / {{ player.deaths }} / {{ player.assists }}
+                                    <br />
+                                    {{ player.totalMinionsKilled + player.neutralMinionsKilled }} <img src="{{ asset("riot/lol/img/creep.png") }}" alt="Creep" data-bs-toggle="tooltip" data-bs-placement="top" title="Creeps tués" />
+                                    <br />
+                                    {{ player.goldEarned|number_format(0, ",", " ") }} <img src="{{ asset("riot/lol/img/gold.png") }}" alt="Gold" data-bs-toggle="tooltip" data-bs-placement="top" title="Golds gagnés" />
+                                </td>
+                                <td class="text-center">
+                                    <img src="{{ asset("riot/lol/latest/img/item/" ~ player.ward ~ ".png") }}" alt="" width="40px" height="auto" />
+                                </td>
+                                <td class="text-center itemList">
+                                    {% if player.item1 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item1 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item2 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item2 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item3 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item3 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item4 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item4 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item5 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item5 ~ ".png") }}" alt="" />{% endif %}
+                                    {% if player.item6 is not same as(0) %}<img src="{{ asset("riot/lol/latest/img/item/" ~ player.item6 ~ ".png") }}" alt="" />{% endif %}
+                                </td>
+                                <td class="text-center">
+                                    <img src="{{ asset("riot/lol/img/champion/tiles/" ~ player.champion.image) }}" alt="{{ player.champion.name }}" width="50px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.champion.name }}" />
+                                    <br />
+                                    {{ player.summonerName }}
+                                </td>
+                                <td class="text-center">
+                                    {% if player.lane is not null %}
+                                        <img src="{{ asset("riot/lol/img/lanes/" ~ player.lane.image) }}" alt="{{ player.lane.name }}" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ player.lane.name }}" />
+                                    {% else %}
+                                        <img src="{{ asset("riot/lol/img/lanes/unknown.png") }}" alt="Inconnu" width="30px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" title="Poste inconnu" />
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>

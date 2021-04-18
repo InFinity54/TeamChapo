@@ -1,0 +1,41 @@
+#revenus {
+    overflow-x: scroll;
+}
+
+#revenus table {
+    margin: 0;
+}
+
+@media only screen and (min-width: 1420px) {
+    #revenus {
+        overflow-x: hidden;
+    }
+}
+
+#revenus table thead th {
+    vertical-align: top;
+}
+
+#revenus table tfoot th {
+    vertical-align: bottom;
+}
+
+#revenus .blueTeamRevenus, #revenus .redTeamRevenus {
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+
+#revenus .blueTeamRevenus {
+    background-color: #4e73df;
+}
+
+#revenus .redTeamRevenus {
+    background-color: #e74a3b;
+}
+
+#revenus .teamSummonerRevenus {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}

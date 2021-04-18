@@ -121,7 +121,7 @@ function retrieveGames(i = 0) {
                             type: "GET",
                             dataType: "json",
                             success: function (dataGame) {
-                                appendToProgressLog(`<p>Vérification de la partie ` + gamesToRetrieve[i] + ` les serveurs de Riot Games...</p>`);
+                                appendToProgressLog(`<p>Vérification de la partie ` + gamesToRetrieve[i] + `...</p>`);
 
                                 if (dataGame.isValid === true) {
                                     appendToProgressLog(`<p>Enregistrement de la partie ` + gamesToRetrieve[i] + ` dans la base de données...</p>`);
@@ -135,12 +135,11 @@ function retrieveGames(i = 0) {
                                         dataType: "json",
                                         success: function (dataSave) {
                                             if (dataSave.code === 200) {
-                                                appendToProgressLog(`<p class="text-success">Partie ` + gamesToRetrieve[i] + ` enregistrée en base de données.</p>`);
+                                                appendToProgressLog(`<p class="text-success">Partie ` + gamesToRetrieve[i] + ` enregistrée dans la base de données.</p>`);
                                                 changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3)));
-                                                addedGames++;
                                                 retrieveGames(i + 1);
                                             } else {
-                                                appendToProgressLog(`<p class="text-danger">Erreur pendant l'enregistrement de la partie ` + gamesToRetrieve[i] + ` en base de données.</p>`);
+                                                appendToProgressLog(`<p class="text-danger">Erreur pendant l'enregistrement de la partie ` + gamesToRetrieve[i] + ` dans la base de données.</p>`);
                                                 console.error(dataSave.message);
                                             }
                                         },
@@ -193,7 +192,6 @@ function retrieveGames(i = 0) {
                         });
                     } else {
                         appendToProgressLog(`<p class="text-warning">Partie ` + gamesToRetrieve[i] + ` passée : partie déjà sauvegardée dans la base de données.</p>`);
-                        gamesToSkip.push(gamesToRetrieve[i]);
                         changeProgressValue(Math.round(33 + (i / gamesToRetrieve.length * 100 / 3)));
                         retrieveGames(i + 1);
                     }

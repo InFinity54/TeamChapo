@@ -1,0 +1,41 @@
+#stats {
+    overflow-x: scroll;
+}
+
+#stats table {
+    margin: 0;
+}
+
+@media only screen and (min-width: 1420px) {
+    #stats {
+        overflow-x: hidden;
+    }
+}
+
+#stats table thead th {
+    vertical-align: top;
+}
+
+#stats table tfoot th {
+    vertical-align: bottom;
+}
+
+#stats .blueTeamStats, #stats .redTeamStats {
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+
+#stats .blueTeamStats {
+    background-color: #4e73df;
+}
+
+#stats .redTeamStats {
+    background-color: #e74a3b;
+}
+
+#stats .teamSummonerStats {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}

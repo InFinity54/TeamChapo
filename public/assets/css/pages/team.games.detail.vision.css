@@ -1,0 +1,41 @@
+#vision {
+    overflow-x: scroll;
+}
+
+#vision table {
+    margin: 0;
+}
+
+@media only screen and (min-width: 1420px) {
+    #vision {
+        overflow-x: hidden;
+    }
+}
+
+#vision table thead th {
+    vertical-align: top;
+}
+
+#vision table tfoot th {
+    vertical-align: bottom;
+}
+
+#vision .blueTeamVision, #vision .redTeamVision {
+    display: block;
+    width: 100%;
+    height: 10px;
+}
+
+#vision .blueTeamVision {
+    background-color: #4e73df;
+}
+
+#vision .redTeamVision {
+    background-color: #e74a3b;
+}
+
+#vision .teamSummonerVision {
+    display: block;
+    width: 100%;
+    padding: 10px;
+}
