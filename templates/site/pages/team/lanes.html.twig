@@ -3,7 +3,9 @@
 {% block title %}Équipe > Postes{% endblock %}
 
 {% block css %}{% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{ asset("assets/js/tooltips.js") }}"></script>
+{% endblock %}
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -30,9 +32,7 @@
                         {% for lane in lanes %}
                             <tr class="text-center">
                                 <td class="align-middle">
-                                    <img src="{{ asset("riot/lol/img/lanes/" ~ lane.image) }}" alt="" title="{{ lane.name }}" width="50" height="auto" />
-                                    <br />
-                                    {{ lane.name }}
+                                    <img class="" src="{{ asset("riot/lol/img/lanes/" ~ lane.image) }}" alt="{{ lane.name }}" title="{{ lane.name }}" width="50px" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
                                 </td>
                                 <td class="align-middle">
                                     {% if lane.user|length > 0 %}
