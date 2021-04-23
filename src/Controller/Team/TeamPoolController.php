@@ -16,7 +16,7 @@ class TeamPoolController extends AbstractController
     public function teamPool()
     {
         $manager = $this->getDoctrine()->getManager();
-        $users = $manager->getRepository(User::class)->findAll();
+        $users = $manager->getRepository(User::class)->getActualTeamMembers();
 
         return $this->render("site/pages/team/pool/index.html.twig", [
             "users" => $users

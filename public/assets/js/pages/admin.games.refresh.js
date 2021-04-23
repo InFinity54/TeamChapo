@@ -1,6 +1,13 @@
 const progressBar = $("#gamesRefreshProgressBar");
 const progressLog = $("#gamesRefreshProgressLog");
 
+let team = {
+    top: null,
+    jungle: null,
+    mid: null,
+    adc: null,
+    support: null
+} ;
 let userId = "";
 let riotAccountId = "";
 let riotId = "";
@@ -21,6 +28,50 @@ function appendToProgressLog(html) {
 
 function retrieveUserId() {
     userId = progressLog.data("user-id");
+}
+
+function isTeamComplete() {
+    appendToProgressLog(`<p>Vérification de la composition de l'équipe...</p>`);
+
+    try {
+        $.ajax({
+            url: Routing.generate('api_team_state'),
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data.isComplete) {
+                    team.top = data.players.top;
+                    team.jungle = data.players.jungle;
+                    team.mid = data.players.middle;
+                    team.adc = data.players.adc;
+                    team.support = data.players.support;
+
+                    appendToProgressLog(`<p class="text-success">Équipe complète.</p>`);
+                    changeProgressValue(10);
+                    retrieveRiotIds();
+                } else {
+                    appendToProgressLog(`<p class="text-danger">L'équipe est incomplète. Un ou plusieurs postes ne sont pas occupés.</p>`);
+                    appendToProgressLog(`<p class="text-danger font-weight-bold">La mise à jour de l'historique de parties a été annulée.</p>`);
+                    progressBar.removeClass("progress-bar-striped");
+                    progressBar.removeClass("progress-bar-animated");
+                    changeProgressValue(100);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                appendToProgressLog(`<p class="text-danger">Erreur lors de vérification de la composition de l'équipe.</p>`);
+                progressBar.removeClass("progress-bar-striped");
+                progressBar.removeClass("progress-bar-animated");
+                changeProgressValue(100);
+                console.error(errorThrown);
+            }
+        });
+    } catch (error) {
+        appendToProgressLog(`<p class="text-danger">Erreur lors de la récupération des identifiants Riot Games.</p>`);
+        progressBar.removeClass("progress-bar-striped");
+        progressBar.removeClass("progress-bar-animated");
+        changeProgressValue(100);
+        console.error(error);
+    }
 }
 
 function retrieveRiotIds() {
@@ -266,6 +317,6 @@ $(document).ready(function() {
         progressLog.html("");
         progressLog.removeClass("overflow-hidden");
         progressLog.removeClass("h-auto");
-        retrieveRiotIds();
+        isTeamComplete();
     }, 3000);
 });

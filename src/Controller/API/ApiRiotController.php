@@ -60,7 +60,7 @@ class ApiRiotController extends AbstractController
     private function gameHasAllTeamPlayers(array $participants): bool
     {
         $manager = $this->getDoctrine()->getManager();
-        $users = $manager->getRepository(User::class)->findAll();
+        $users = $manager->getRepository(User::class)->getActualTeamMembers();
 
         $puuidFromTeam = [];
 
