@@ -17,8 +17,13 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Historique de parties</h6>
+                    {% if app.user is not null and "ROLE_ADMIN" in app.user.roles %}
+                        <a href="{{ path("admin_games_refresh") }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                            <i class="fas fa-edit fa-sm"></i> Modifier mon pool de champions
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="card-body">
                     {% if games|length > 0 %}
