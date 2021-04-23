@@ -36,7 +36,7 @@
                         {% for user in users %}
                             <tr class="text-center">
                                 <td class="align-middle">
-                                    <img class="" src="{{ asset("riot/lol/img/lanes/" ~ user.lane.image) }}" alt="{{ user.lane.name }}" title="{{ user.lane.name }}" width="30" height="auto" /> {{ user.nickname }}
+                                    <img class="" src="{{ asset("riot/lol/img/lanes/" ~ user.lane.image) }}" alt="{{ user.lane.name }}" title="{{ user.lane.name }}" width="30" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" /> {{ user.nickname }}
                                 </td>
                                 {% if user.pool is not null %}
                                         <td class="align-middle">
