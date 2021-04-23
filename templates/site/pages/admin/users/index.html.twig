@@ -3,7 +3,9 @@
 {% block title %}Administration > Utilisateurs{% endblock %}
 
 {% block css %}{% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+    <script type="text/javascript" src="{{ asset("assets/js/tooltips.js") }}"></script>
+{% endblock %}
 
 {% block body %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -24,21 +26,22 @@
                 <div class="card-body">
                     <table class="table table-striped">
                         <thead class="text-center">
+                            <th>Poste</th>
                             <th>Pseudo</th>
-                            <th>Date d'inscription</th>
-                            <th>Date de dernière modification</th>
                             <th>Riot PUUID</th>
                             <th>Riot Account ID</th>
                             <th>Riot ID</th>
+                            <th>État du compte</th>
                             <th></th>
                         </thead>
                         {% for user in users %}
                             <tr class="text-center">
                                 <td class="align-middle">
+                                    <img class="" src="{{ asset("riot/lol/img/lanes/" ~ user.lane.image) }}" alt="{{ user.lane.name }}" title="{{ user.lane.name }}" width="30" height="auto" data-bs-toggle="tooltip" data-bs-placement="top" />
+                                </td>
+                                <td class="align-middle">
                                     <img class="img-profile rounded-circle mr-1" src="{{ asset("assets/img/avatars/" ~ user.picture) }}" alt="" width="auto" height="40" /> {{ user.nickname }}
                                 </td>
-                                <td class="align-middle">{{ user.registerAt|date("d/m/Y") }} à {{ user.registerAt|date("H:i") }}</td>
-                                <td class="align-middle">{{ user.lastUpdateAt|date("d/m/Y") }} à {{ user.lastUpdateAt|date("H:i") }}</td>
                                 <td class="align-middle">
                                     {% if user.riotPuuid is not null %}
                                         <span class="text-success"><i class="fas fa-check"></i> Oui</span>
@@ -58,6 +61,13 @@
                                         <span class="text-success"><i class="fas fa-check"></i> Oui</span>
                                     {% else %}
                                         <span class="text-danger"><i class="fas fa-times"></i> Non</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle">
+                                    {% if user.isActivated %}
+                                        <span class="text-success"><i class="fas fa-check"></i> Actif</span>
+                                    {% else %}
+                                        <span class="text-danger"><i class="fas fa-times"></i> Inactif</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle">
@@ -83,9 +93,12 @@
                             </tr>
                         {% endfor %}
                         <tfoot class="text-center">
+                            <th>Poste</th>
                             <th>Pseudo</th>
-                            <th>Date d'inscription</th>
-                            <th>Date de dernière modification</th>
+                            <th>Riot PUUID</th>
+                            <th>Riot Account ID</th>
+                            <th>Riot ID</th>
+                            <th>État du compte</th>
                             <th></th>
                         </tfoot>
                     </table>
