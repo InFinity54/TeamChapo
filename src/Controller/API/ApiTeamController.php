@@ -11,10 +11,10 @@ class ApiTeamController extends AbstractController
     /**
      * @Route("/api/users/state", name="api_team_state", options={"expose"=true})
      */
-    public function getTeamState(int $id): JsonResponse
+    public function getTeamState(): JsonResponse
     {
         $manager = $this->getDoctrine()->getManager();
-        $users = $manager->getRepository(User::class)->find($id);
+        $users = $manager->getRepository(User::class)->findAll();
         $response = [
             "isComplete" => false,
             "players" => [
@@ -27,25 +27,28 @@ class ApiTeamController extends AbstractController
         ];
 
         if ($users) {
+            /**
+             * @var User $user
+             */
             foreach ($users as $user) {
                 if ($user->getLane() !== null) {
                     switch ($user->getLane()->getName()) {
                         default:
                             break;
                         case "Top":
-                            $response["players"]["top"] = $user;
+                            $response["players"]["top"] = $user->getNickname();
                             break;
                         case "Jungle":
-                            $response["players"]["jungle"] = $user;
+                            $response["players"]["jungle"] = $user->getNickname();
                             break;
                         case "Mid":
-                            $response["players"]["middle"] = $user;
+                            $response["players"]["middle"] = $user->getNickname();
                             break;
                         case "ADC":
-                            $response["players"]["adc"] = $user;
+                            $response["players"]["adc"] = $user->getNickname();
                             break;
                         case "Support":
-                            $response["players"]["support"] = $user;
+                            $response["players"]["support"] = $user->getNickname();
                             break;
                     }
                 }
