@@ -2,6 +2,8 @@
 
 Site Web destiné aux activités de la Team Chapo.
 
+__Note :__ La Team Chapô ayant été officiellement dissoute le 08/07/2021, les mises à jour du site ont stoppées. Le *Data Dragon* de *League of Legends* a continué d'être mis à jour pendant deux mois, jusqu'au 08/09/2021. Depuis cette date, l'intégralité du site a été figé. Les mises à jour reprendront si l'équipe se reforme un jour.
+
 ## Installation
 
 ```bash
